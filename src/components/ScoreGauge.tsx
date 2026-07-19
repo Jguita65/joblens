@@ -7,9 +7,11 @@ import { scoreLabel } from "@/lib/analyzer";
 export default function ScoreGauge({
   score,
   size = 128,
+  label = "Índice de inclusividad",
 }: {
   score: number;
   size?: number;
+  label?: string;
 }) {
   const clamped = Math.max(0, Math.min(100, score));
   const [display, setDisplay] = useState(0);
@@ -74,7 +76,7 @@ export default function ScoreGauge({
       <p className="mt-1 text-sm font-semibold" style={{ color }}>
         {scoreLabel(clamped)}
       </p>
-      <p className="text-xs text-slate-400">Índice de inclusividad</p>
+      <p className="text-xs text-slate-400">{label}</p>
     </div>
   );
 }
