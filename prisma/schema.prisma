@@ -1,0 +1,35 @@
+// Prisma schema for JobLens.
+// The database is OPTIONAL: it is only used when DATABASE_URL is defined.
+// When it is absent the app degrades gracefully to browser localStorage.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime   @default(now())
+  analyses     Analysis[]
+}
+
+model Analysis {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  inputText String
+  score     Int
+  findings  Json
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
