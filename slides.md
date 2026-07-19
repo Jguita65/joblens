@@ -1,6 +1,6 @@
 ---
 marp: true
-title: JobLens — Analizador de sesgos en ofertas de empleo
+title: RecruitKit — Herramientas para reclutadores
 paginate: true
 ---
 
@@ -15,9 +15,9 @@ CÓMO USAR ESTAS SLIDES
   Guarda las imágenes en una carpeta ./slides-img/ dentro del repo.
 -->
 
-# 🔍 JobLens
+# 🔍 RecruitKit
 
-## Analizador de sesgos en ofertas de empleo
+## Herramientas para una selección más justa y eficaz
 
 **Juan Ignacio Guitart** · TFM
 
@@ -41,7 +41,7 @@ excluyente**:
 
 ## La solución
 
-**JobLens** detecta y explica el lenguaje sesgado, y propone **reescrituras
+**RecruitKit** detecta y explica el lenguaje sesgado, y propone **reescrituras
 inclusivas** — en tiempo real, sin coste y sin enviar datos a terceros.
 
 - ✅ Resaltado por categoría (un color por tipo de sesgo)

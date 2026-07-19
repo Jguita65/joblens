@@ -1,27 +1,33 @@
-# JobLens
+# RecruitKit
 
-Herramienta web para escribir mejores procesos de selección. Tiene dos partes:
+Kit de herramientas web para reclutadores, con foco en una selección más justa y
+eficaz. Reúne varias herramientas en un panel:
 
-- **Analizador de sesgos**: detecta lenguaje sesgado o excluyente en las
-  descripciones de puestos (género, edad, capacitismo, jerga, requisitos
-  discriminatorios, exigencia irreal) y propone cómo reescribirlo.
-- **Compatibilidad ATS**: compara una oferta con un currículum, calcula el
-  encaje de palabras clave y avisa de si el CV pasaría un filtro ATS.
+- **Analizador de sesgos**: detecta lenguaje excluyente en las ofertas (género,
+  edad, capacitismo, jerga, requisitos discriminatorios, exigencia irreal) y
+  propone reescribirlo.
+- **Generador de ofertas**: crea una oferta inclusiva y bien estructurada a
+  partir de un formulario, analizada al momento.
+- **Compatibilidad ATS**: compara una oferta con un CV y calcula el encaje de
+  palabras clave y la compatibilidad del currículum.
+- **Ranking de candidatos**: ordena varios CV según su encaje con la oferta.
+- **Preguntas de entrevista**: banco por competencia y preguntas a evitar.
+- **Plantillas de email**: invitación, oferta o rechazo, listas para enviar.
+- **Comparador de versiones** e **historial** con estadísticas.
 
-El análisis se ejecuta en el propio servidor con un lexicón curado, sin llamar a
-servicios externos ni usar claves de API.
+Los análisis se ejecutan en el propio servidor con un lexicón curado, sin llamar
+a servicios externos ni usar claves de API.
 
 ## Descripción
 
-Al pegar una oferta, la app resalta los fragmentos problemáticos por categoría,
-muestra un panel con cada hallazgo (término, motivo y sugerencia) y calcula un
-índice de inclusividad de 0 a 100. Desde ahí puedes aplicar las correcciones,
-generar una versión reescrita, revisar buenas prácticas, comparar dos versiones,
-guardar el análisis en tu historial o exportar un informe en Word o PDF.
-
-La herramienta ATS añade el punto de vista de la candidatura: pega la oferta y tu
-CV para ver qué palabras clave te faltan y si el formato del currículum es
-compatible con los sistemas de seguimiento de candidatos.
+Tras iniciar sesión llegas a un panel con todas las herramientas. En el
+analizador, al pegar una oferta se resaltan los fragmentos problemáticos por
+categoría, se lista cada hallazgo (término, motivo y sugerencia) y se calcula un
+índice de inclusividad de 0 a 100; desde ahí puedes aplicar correcciones,
+generar una versión reescrita, revisar buenas prácticas o exportar un informe en
+Word o PDF. El resto de herramientas cubren el resto del proceso: redactar la
+oferta, evaluar y ordenar candidaturas, preparar entrevistas y comunicarte con
+las personas candidatas.
 
 ### Categorías de sesgo
 
@@ -76,17 +82,26 @@ navegador (`localStorage`).
 src/
   app/
     api/            rutas: auth, register, analyses
+    inicio/         panel con todas las herramientas
     dashboard/      analizador de sesgos
+    generador/      generador de ofertas
     ats/            compatibilidad oferta ↔ CV
+    ranking/        ranking de candidatos
+    entrevista/     preguntas de entrevista
+    plantillas/     plantillas de email
     compare/        comparador de versiones
     history/        historial + estadísticas
     login/  register/
-  components/       UI (analizador, ATS, historial, gráficos, logo…)
+  components/       UI de cada herramienta, navegación, logo…
   lib/
+    tools.ts        registro de herramientas del panel
     lexicon.json    lexicón de sesgos
     analyzer.ts     motor de análisis y reescritura
     ats.ts          motor de matching ATS
     goodPractices.ts detección de buenas prácticas
+    offerTemplate.ts  generación de ofertas
+    interviewQuestions.ts  banco de preguntas
+    emailTemplates.ts  plantillas de email
     report.ts       informes Word / PDF
     auth.ts  users.ts  prisma.ts  history-client.ts
 prisma/
@@ -95,13 +110,16 @@ prisma/
 
 ## Funcionalidades
 
+- Panel de inicio con acceso a todas las herramientas.
 - Análisis de sesgos en tiempo real con resaltado por categoría e índice de
-  inclusividad.
-- Reescritura inclusiva: aplica las sugerencias una a una o todas de golpe.
-- Detección de buenas prácticas (salario, flexibilidad, igualdad, formación,
-  beneficios, lenguaje inclusivo) con medidor de completitud.
+  inclusividad, reescritura inclusiva (aplicable una a una o entera) y detección
+  de buenas prácticas.
+- Generador de ofertas: formulario → oferta inclusiva analizada al momento.
 - Compatibilidad ATS: encaje de palabras clave oferta ↔ CV y comprobaciones de
   formato del currículum.
+- Ranking de candidatos: ordena varios CV por su encaje con la oferta.
+- Preguntas de entrevista por competencia y lista de preguntas a evitar.
+- Plantillas de email a candidatos (invitación, información, oferta, rechazo).
 - Comparador de dos versiones de una oferta.
 - Exportación de informes en Word (.docx) y PDF.
 - Historial con estadísticas y evolución, búsqueda y orden.

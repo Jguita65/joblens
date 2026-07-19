@@ -1,4 +1,4 @@
-# 🎬 Guion del vídeo — JobLens (2–4 minutos)
+# 🎬 Guion del vídeo — RecruitKit (2–4 minutos)
 
 > **Duración objetivo:** 2:30–3:30 min.
 > **Pantalla:** obligatoria (graba la pantalla mostrando la app).
@@ -19,13 +19,14 @@
 
 ## 1. Presentación (0:00 – 0:25)
 
-> **[EN PANTALLA: la pantalla de login de JobLens]**
+> **[EN PANTALLA: la pantalla de login de RecruitKit]**
 
 **Guion:**
-> "Hola, soy Juan Ignacio Guitart y este es mi proyecto: **JobLens**, un
-> analizador de sesgos en ofertas de empleo. Ayuda a los equipos de selección a
-> detectar lenguaje excluyente en las descripciones de puestos y a reescribirlo
-> de forma más inclusiva."
+> "Hola, soy Juan Ignacio Guitart y este es mi proyecto: **RecruitKit**, un kit de
+> herramientas para reclutadores. Reúne en un panel varias herramientas para una
+> selección más justa y eficaz: desde analizar y generar ofertas hasta evaluar
+> candidatos, preparar entrevistas y comunicarse con ellos. En el vídeo me centro
+> en la herramienta principal, el analizador de sesgos."
 
 ---
 
@@ -51,7 +52,7 @@
 > **[EN PANTALLA: pulsa "Cargar ejemplo" y luego "Analizar"]**
 
 **Guion:**
-> "Pego una oferta y pulso Analizar. Al instante, JobLens **resalta cada
+> "Pego una oferta y pulso Analizar. Al instante, RecruitKit **resalta cada
 > fragmento problemático con un color por categoría**."
 
 ### 3.2 El texto resaltado
@@ -79,7 +80,7 @@
 **Guion:**
 > "Guardo el análisis y me voy al **Historial**, donde quedan todos mis análisis
 > anteriores. Si hay base de datos configurada se guardan en Postgres; si no, en
-> el propio navegador. La app nunca se rompe por falta de base de datos."
+> el propio navegador."
 
 ---
 
@@ -100,9 +101,9 @@
 > **[EN PANTALLA: vuelve al dashboard o muestra el repo de GitHub]**
 
 **Guion:**
-> "Y esto es JobLens: una herramienta sencilla para escribir ofertas de empleo
-> más justas e inclusivas. Tenéis el código en GitHub y la app desplegada en los
-> enlaces de la descripción. ¡Gracias por ver el vídeo!"
+> "Y esto es RecruitKit: un kit de herramientas para hacer una selección más justa
+> y eficaz. Tenéis el código en GitHub y la app desplegada en los enlaces de la
+> descripción. ¡Gracias por ver el vídeo!"
 
 **Enlaces para mostrar / mencionar:**
 - Repositorio: https://github.com/Jguita65/joblens
