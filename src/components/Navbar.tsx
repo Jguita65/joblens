@@ -28,6 +28,9 @@ export default function Navbar() {
           <Link href="/dashboard" className={linkClass("/dashboard")}>
             Analizar
           </Link>
+          <Link href="/ats" className={linkClass("/ats")}>
+            ATS
+          </Link>
           <Link href="/compare" className={linkClass("/compare")}>
             Comparar
           </Link>

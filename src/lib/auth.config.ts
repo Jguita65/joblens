@@ -20,7 +20,8 @@ export const authConfig = {
       const isProtected =
         path.startsWith("/dashboard") ||
         path.startsWith("/history") ||
-        path.startsWith("/compare");
+        path.startsWith("/compare") ||
+        path.startsWith("/ats");
 
       if (isProtected && !isLoggedIn) {
         return false;
