@@ -180,8 +180,9 @@ npx prisma db seed     # crea test@test.com en la DB (idempotente)
 
 ## h. URL de despliegue
 
-🌐 **Producción:** _pendiente de despliegue_ — ver sección de despliegue más abajo.
-La URL se actualizará aquí una vez completado `vercel --prod`.
+🌐 **Producción:** **https://joblens-puce.vercel.app**
+
+Cuenta de prueba: `test@test.com` / `test1234`.
 
 ### Desplegar en Vercel
 

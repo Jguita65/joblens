@@ -107,7 +107,7 @@
 
 **Enlaces para mostrar / mencionar:**
 - Repositorio: https://github.com/Jguita65/joblens
-- App: _(URL de producción tras el deploy)_
+- App: https://joblens-puce.vercel.app
 
 ---
 

@@ -114,7 +114,7 @@ inclusivas** — en tiempo real, sin coste y sin enviar datos a terceros.
 ## Enlaces
 
 - 💻 **Repositorio:** https://github.com/Jguita65/joblens
-- 🌐 **App en producción:** _(añadir tras el deploy)_
+- 🌐 **App en producción:** https://joblens-puce.vercel.app
 - 🎬 **Guion del vídeo:** `guion-video.md`
 - 🔑 **Cuenta de prueba:** `test@test.com` / `test1234`
 
