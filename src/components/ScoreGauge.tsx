@@ -1,28 +1,56 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { scoreLabel } from "@/lib/analyzer";
 
-/** Circular gauge for the inclusivity index (0–100). */
-export default function ScoreGauge({ score }: { score: number }) {
+/** Circular gauge for the inclusivity index (0–100), with an animated count-up. */
+export default function ScoreGauge({
+  score,
+  size = 128,
+}: {
+  score: number;
+  size?: number;
+}) {
+  const clamped = Math.max(0, Math.min(100, score));
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    let raf: number;
+    const start = performance.now();
+    const from = display;
+    const duration = 600;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(from + (clamped - from) * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clamped]);
+
   const radius = 52;
   const circumference = 2 * Math.PI * radius;
-  const clamped = Math.max(0, Math.min(100, score));
-  const offset = circumference - (clamped / 100) * circumference;
-
+  const offset = circumference - (display / 100) * circumference;
   const color =
     clamped >= 75 ? "#16a34a" : clamped >= 50 ? "#f59e0b" : "#dc2626";
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative h-32 w-32">
-        <svg className="h-32 w-32 -rotate-90" viewBox="0 0 120 120">
+      <div className="relative" style={{ height: size, width: size }}>
+        <svg
+          className="-rotate-90"
+          style={{ height: size, width: size }}
+          viewBox="0 0 120 120"
+        >
           <circle
             cx="60"
             cy="60"
             r={radius}
             fill="none"
-            stroke="#e2e8f0"
-            strokeWidth="12"
+            className="stroke-slate-200 dark:stroke-slate-700"
+            strokeWidth="11"
           />
           <circle
             cx="60"
@@ -30,19 +58,20 @@ export default function ScoreGauge({ score }: { score: number }) {
             r={radius}
             fill="none"
             stroke={color}
-            strokeWidth="12"
+            strokeWidth="11"
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
-            style={{ transition: "stroke-dashoffset 0.6s ease" }}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-3xl font-bold text-slate-900">{clamped}</span>
+          <span className="text-3xl font-bold text-slate-900 dark:text-white">
+            {display}
+          </span>
           <span className="text-xs text-slate-400">/ 100</span>
         </div>
       </div>
-      <p className="mt-2 text-sm font-semibold" style={{ color }}>
+      <p className="mt-1 text-sm font-semibold" style={{ color }}>
         {scoreLabel(clamped)}
       </p>
       <p className="text-xs text-slate-400">Índice de inclusividad</p>
