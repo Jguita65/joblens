@@ -643,6 +643,28 @@
       "explanation": "Sugiere asumir múltiples roles indefinidos, señal de sobrecarga.",
       "suggestion": "Enumera las responsabilidades concretas del puesto.",
       "replacement": ""
+    },
+    {
+      "id": "gen-masculino-generico",
+      "term": "masculino genérico",
+      "pattern": "(?:un|el|los|del|al|como|nuestro|vuestro)\\s+(?:desarrollador|ingeniero|programador|t[eé]cnico|consultor|arquitecto|dise[nñ]ador|administrador|gestor|director|jefe|empleado|trabajador|candidato|colaborador|operario|abogado|contable|comercial\\s+masculino)(?:es)?(?!/a)",
+      "category": "gender",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "El masculino genérico (\"el desarrollador\", \"el candidato\") invisibiliza a las mujeres y otros géneros y reduce la diversidad de las candidaturas.",
+      "suggestion": "Usa una forma neutra (\"persona desarrolladora\", \"quien ocupe el puesto\") o el desdoblamiento (\"desarrollador/a\").",
+      "replacement": "__KEEP__"
+    },
+    {
+      "id": "unr-salario-competitivo",
+      "term": "salario competitivo",
+      "pattern": "salario\\s+competitivo|according\\s+to\\s+experience|salario\\s+seg[uú]n\\s+val[ií]a|salario\\s+a\\s+negociar",
+      "category": "unrealistic",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "\"Salario competitivo\" o \"según valía\" no aporta transparencia salarial; genera desconfianza y desigualdad en la negociación.",
+      "suggestion": "Indica un rango salarial concreto (p. ej. \"30.000–36.000 € brutos/año\").",
+      "replacement": "__KEEP__"
     }
   ]
 }

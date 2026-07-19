@@ -154,6 +154,8 @@ export function applyFindings(text: string, findings: Finding[]): string {
   for (let i = items.length - 1; i >= 0; i--) {
     const f = items[i];
     const entry = entryById.get(f.entryId);
+    // "__KEEP__" = detected but needs manual/AI rewriting; leave the text as is.
+    if (entry?.replacement === "__KEEP__") continue;
     out = out.slice(0, f.start) + (entry ? entry.replacement : "") + out.slice(f.end);
   }
   return cleanupText(out);
@@ -162,16 +164,18 @@ export function applyFindings(text: string, findings: Finding[]): string {
 export function rewrite(text: string, findings?: Finding[]): RewriteResult {
   const items = nonOverlapping(findings ?? analyze(text).findings);
 
-  const changes: RewriteChange[] = items.map((f) => {
-    const entry = entryById.get(f.entryId);
-    const replacement = entry ? entry.replacement : "";
-    return {
-      original: f.match,
-      replacement,
-      category: f.category,
-      removed: replacement.trim().length === 0,
-    };
-  });
+  const changes: RewriteChange[] = items
+    .filter((f) => entryById.get(f.entryId)?.replacement !== "__KEEP__")
+    .map((f) => {
+      const entry = entryById.get(f.entryId);
+      const replacement = entry ? entry.replacement : "";
+      return {
+        original: f.match,
+        replacement,
+        category: f.category,
+        removed: replacement.trim().length === 0,
+      };
+    });
 
   const cleaned = applyFindings(text, items);
   return { text: cleaned, changes, score: analyze(cleaned).score };
