@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
+import { Logo } from "./Logo";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -19,18 +20,16 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/70">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-pink-500 text-lg shadow-sm">
-            🔍
-          </span>
-          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-            JobLens
-          </span>
+        <Link href="/dashboard">
+          <Logo size={30} />
         </Link>
 
         <div className="flex items-center gap-1.5">
           <Link href="/dashboard" className={linkClass("/dashboard")}>
             Analizar
+          </Link>
+          <Link href="/compare" className={linkClass("/compare")}>
+            Comparar
           </Link>
           <Link href="/history" className={linkClass("/history")}>
             Historial

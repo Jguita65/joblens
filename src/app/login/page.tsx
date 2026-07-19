@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { LogoMark } from "@/components/Logo";
 
 const FEATURES = [
   ["🎯", "Detección por categorías", "Género, edad, capacitismo, jerga, requisitos discriminatorios y exigencia irreal."],
@@ -38,9 +39,7 @@ export default function LoginPage() {
         {/* Brand / features */}
         <div className="hidden lg:block">
           <div className="mb-4 flex items-center gap-2">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-pink-500 text-2xl shadow-lg">
-              🔍
-            </span>
+            <LogoMark size={44} style={{ borderRadius: 12 }} />
             <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               JobLens
             </span>
@@ -73,7 +72,9 @@ export default function LoginPage() {
         {/* Form */}
         <div className="card animate-scale-in w-full p-8">
           <div className="mb-6 text-center lg:hidden">
-            <div className="mb-2 text-3xl">🔍</div>
+            <div className="mb-2 flex justify-center">
+              <LogoMark size={44} />
+            </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">JobLens</h1>
             <p className="mt-1 text-sm text-slate-500">
               Analizador de sesgos en ofertas de empleo

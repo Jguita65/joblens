@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { LogoMark } from "@/components/Logo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -44,7 +45,9 @@ export default function RegisterPage() {
     <main className="app-bg flex min-h-screen items-center justify-center px-4 py-10">
       <div className="card animate-scale-in w-full max-w-md p-8">
         <div className="mb-6 text-center">
-          <div className="mb-2 text-3xl">🔍</div>
+          <div className="mb-2 flex justify-center">
+            <LogoMark size={44} />
+          </div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
             Crear cuenta
           </h1>
