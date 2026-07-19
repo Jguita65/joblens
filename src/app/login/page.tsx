@@ -51,8 +51,8 @@ export default function LoginPage() {
             </span>
           </h1>
           <p className="mt-3 text-slate-500 dark:text-slate-400">
-            Detecta lenguaje sesgado o excluyente y reescríbelo. 100 % local,
-            determinista y sin claves de API.
+            Detecta lenguaje sesgado o excluyente en tus ofertas y reescríbelo con
+            sugerencias listas para aplicar.
           </p>
           <ul className="mt-6 space-y-3">
             {FEATURES.map(([icon, title, desc]) => (

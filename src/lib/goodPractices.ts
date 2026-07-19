@@ -1,7 +1,5 @@
-// Positive-signal detection: rewards inclusive/attractive practices instead of
-// only flagging problems. Turns JobLens into a full inclusive-writing assistant.
-//
-// Deterministic and local, like the rest of the engine.
+// Detects positive practices in an offer (salary transparency, flexibility,
+// equality, training, benefits, inclusive wording), not only problems.
 
 export interface PracticeGroup {
   id: string;

@@ -1,8 +1,5 @@
-// Prisma client singleton.
-//
-// The database is OPTIONAL. `getPrisma()` returns null when DATABASE_URL is not
-// defined, which lets every caller degrade gracefully to localStorage instead
-// of crashing the app or the deploy.
+// Prisma client singleton. The database is optional: getPrisma() returns null
+// when DATABASE_URL is not set, and callers fall back to localStorage.
 
 import { PrismaClient } from "@prisma/client";
 

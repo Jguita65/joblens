@@ -55,12 +55,12 @@ inclusivas** — en tiempo real, sin coste y sin enviar datos a terceros.
 
 1. El usuario **inicia sesión**.
 2. **Pega** la oferta y pulsa **Analizar**.
-3. El **motor determinista** compara el texto con un **lexicón curado bilingüe**
-   (ES/EN, ~50 patrones con severidad, explicación y sugerencia).
+3. El motor compara el texto con un **lexicón curado bilingüe** (ES/EN, ~50
+   patrones con severidad, explicación y sugerencia).
 4. Se calcula el **índice**: `100 − Σ penalización(severidad)`, acotado a [0, 100].
 5. El usuario **guarda** el análisis (Postgres o `localStorage`).
 
-> 🧠 Todo local y determinista: **sin API keys**, la demo nunca falla.
+> El análisis se apoya en un lexicón de reglas, sin servicios externos.
 
 ---
 
@@ -88,8 +88,8 @@ inclusivas** — en tiempo real, sin coste y sin enviar datos a terceros.
 
 ## Decisiones técnicas
 
-- **Motor local y determinista**: sin dependencias de IA externas → gratis,
-  reproducible y demo a prueba de fallos.
+- **Motor basado en un lexicón**: reglas transparentes y reproducibles, sin
+  servicios externos.
 - **Lexicón en JSON versionado**: separar *datos* de *lógica* lo hace extensible
   sin tocar código.
 - **Degradación elegante**: sin `DATABASE_URL` la app usa `localStorage`; el
@@ -103,8 +103,8 @@ inclusivas** — en tiempo real, sin coste y sin enviar datos a terceros.
 ## Aprendizajes
 
 - Diseñar para la **degradación** (DB opcional) obliga a separar responsabilidades.
-- Un **lexicón curado** bien estructurado aporta transparencia y control frente a
-  una "caja negra" de IA.
+- Un **lexicón curado** bien estructurado aporta transparencia y control, y es
+  fácil de auditar y ampliar.
 - El patrón *split config* de **Auth.js v5** permite middleware en el *edge* sin
   arrastrar dependencias de Node.
 - Los **tests del motor** dan confianza para extender el lexicón sin regresiones.

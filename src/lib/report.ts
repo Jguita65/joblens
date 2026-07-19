@@ -53,8 +53,11 @@ export async function buildWordBlob(data: ReportData): Promise<Blob> {
   );
   children.push(
     para([
-      new TextRun({ text: "Generado con JobLens · ", color: "94A3B8", size: 18 }),
-      new TextRun({ text: "análisis 100% local y determinista", color: "94A3B8", size: 18 }),
+      new TextRun({
+        text: `Generado con JobLens · ${new Date().toLocaleDateString("es-ES")}`,
+        color: "94A3B8",
+        size: 18,
+      }),
     ])
   );
 

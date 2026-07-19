@@ -1,8 +1,5 @@
-// Deterministic, dependency-free bias analyzer.
-//
-// The engine is pure: given the same text and lexicon it always returns the
-// same result. It performs NO network calls and needs NO API keys, so the demo
-// can never fail and the deploy stays free.
+// Bias analyzer. Pure and deterministic: same input, same output. No network
+// calls and no API keys — it works entirely off the local lexicon.
 
 import lexiconData from "./lexicon.json";
 import type {

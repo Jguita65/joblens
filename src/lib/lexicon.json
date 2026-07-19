@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "note": "Lexicón curado bilingüe (ES/EN). Cada entrada define un patrón (regex sin límites de palabra: el analizador los añade con lookarounds Unicode y flags 'giu'). severity: 1 = leve, 2 = medio, 3 = grave. Cada entrada incluye también 'replacement': texto sustituto para la reescritura inclusiva ('' = eliminar el fragmento).",
+  "note": "Lexicón de sesgos ES/EN. severity: 1 leve, 2 medio, 3 grave. replacement: reemplazo inclusivo ('' = eliminar).",
   "categories": {
     "gender": {
       "label": "Género",

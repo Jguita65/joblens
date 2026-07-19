@@ -1,8 +1,5 @@
-// Client-side history store with graceful degradation.
-//
-// It first tries the server API (Postgres via Prisma). If the server responds
-// 204 the app has no database configured, so history is kept in localStorage.
-// This keeps the demo working on a free, database-less deploy.
+// Client-side history store. Tries the server API first; if it responds 204
+// (no database configured), history is kept in localStorage.
 
 import type { Finding } from "./types";
 

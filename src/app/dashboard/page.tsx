@@ -11,8 +11,8 @@ export default function DashboardPage() {
             Analizador de sesgos
           </h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Pega una oferta de empleo y detecta lenguaje sesgado o excluyente. El
-            análisis es 100 % local, determinista y en tiempo real.
+            Pega una oferta de empleo y detecta lenguaje sesgado o excluyente
+            mientras escribes.
           </p>
         </div>
         <AnalyzerClient />

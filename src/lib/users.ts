@@ -1,8 +1,5 @@
-// User lookup and creation with graceful DB degradation.
-//
-// A built-in seed user (test@test.com / test1234) always works, even without a
-// database, so the login demo never fails. Its password is stored as a bcrypt
-// hash — never as plaintext — and can be overridden via env.
+// User lookup and creation. A seed user (test@test.com / test1234) works even
+// without a database; its password is stored as a bcrypt hash, not plaintext.
 
 import bcrypt from "bcryptjs";
 import { getPrisma, hasDatabase } from "./prisma";

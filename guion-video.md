@@ -88,9 +88,8 @@
 > **[EN PANTALLA: opcional — muestra brevemente `src/lib/lexicon.json` y `analyzer.ts`]**
 
 **Guion:**
-> "Por dentro, el análisis es **100 % local y determinista**: no usa ninguna API
-> de pago ni clave externa. Se apoya en un **lexicón curado bilingüe** en JSON,
-> con unas cincuenta reglas, cada una con su patrón, severidad, explicación y
+> "Por dentro, el análisis se apoya en un **lexicón curado bilingüe** en JSON, con
+> unas cincuenta reglas, cada una con su patrón, severidad, explicación y
 > sugerencia. Está construido con **Next.js 15, TypeScript, Tailwind, Auth.js y
 > Prisma**, con **tests en Vitest** para el motor, y desplegado en **Vercel**."
 
