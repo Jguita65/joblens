@@ -12,7 +12,10 @@ import type {
   Finding,
   Lexicon,
   LexiconEntry,
+  RewriteChange,
+  RewriteResult,
   Severity,
+  TextMetrics,
 } from "./types";
 
 export const lexicon = lexiconData as Lexicon;
@@ -45,6 +48,10 @@ function buildRegex(entry: LexiconEntry): RegExp {
 // Compile once at module load — the lexicon never changes at runtime.
 const compiled: Array<{ entry: LexiconEntry; regex: RegExp }> = lexicon.entries.map(
   (entry) => ({ entry, regex: buildRegex(entry) })
+);
+
+const entryById = new Map<string, LexiconEntry>(
+  lexicon.entries.map((e) => [e.id, e])
 );
 
 /**
@@ -96,6 +103,85 @@ export function analyze(text: string): AnalysisResult {
     findings,
     counts,
     totalFindings: findings.length,
+  };
+}
+
+/**
+ * Tidy up spacing/punctuation left over after removing fragments during a
+ * rewrite (double spaces, dangling commas, spaces before punctuation, etc.).
+ */
+function cleanupText(text: string): string {
+  return text
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/,\s*,/g, ",")
+    .replace(/,\s*\./g, ".")
+    .replace(/\(\s*\)/g, "")
+    .replace(/^[ \t]*[,;:]\s*/gm, "")
+    .replace(/([-•*])\s*[,;:]\s*/g, "$1 ")
+    // Collapse a word accidentally duplicated by adjacent replacements ("con con").
+    .replace(/\b(\p{L}+)(\s+\1\b)+/giu, "$1")
+    // Drop a dangling conjunction left before a line break or end ("... en vigor y.").
+    .replace(/\s+\b(y|e|o|u|and|or)\b\s*([.\n]|$)/gi, "$2")
+    .replace(/[ \t]+$/gm, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+/**
+ * Produce an inclusive rewrite of the text by applying each finding's
+ * replacement (or removing the fragment). Deterministic and offset-safe:
+ * substitutions are applied from the end of the string backwards.
+ */
+export function rewrite(text: string, findings?: Finding[]): RewriteResult {
+  const items = (findings ?? analyze(text).findings)
+    .slice()
+    .sort((a, b) => a.start - b.start || b.end - a.end);
+
+  // Drop overlapping matches so we never substitute inside an earlier one.
+  const nonOverlapping: Finding[] = [];
+  let cursor = 0;
+  for (const f of items) {
+    if (f.start >= cursor) {
+      nonOverlapping.push(f);
+      cursor = f.end;
+    }
+  }
+
+  const changes: RewriteChange[] = [];
+  let out = text;
+  // Apply from the end so earlier offsets stay valid.
+  for (let i = nonOverlapping.length - 1; i >= 0; i--) {
+    const f = nonOverlapping[i];
+    const entry = entryById.get(f.entryId);
+    const replacement = entry ? entry.replacement : "";
+    out = out.slice(0, f.start) + replacement + out.slice(f.end);
+  }
+  // Record changes in reading order.
+  for (const f of nonOverlapping) {
+    const entry = entryById.get(f.entryId);
+    const replacement = entry ? entry.replacement : "";
+    changes.push({
+      original: f.match,
+      replacement,
+      category: f.category,
+      removed: replacement.trim().length === 0,
+    });
+  }
+
+  const cleaned = cleanupText(out);
+  return { text: cleaned, changes, score: analyze(cleaned).score };
+}
+
+/** Basic text metrics: word/char counts and bias density per 100 words. */
+export function textMetrics(text: string, totalFindings: number): TextMetrics {
+  const trimmed = text.trim();
+  const words = trimmed ? trimmed.split(/\s+/).length : 0;
+  const biasDensity = words > 0 ? (totalFindings / words) * 100 : 0;
+  return {
+    words,
+    characters: text.length,
+    biasDensity: Math.round(biasDensity * 10) / 10,
   };
 }
 

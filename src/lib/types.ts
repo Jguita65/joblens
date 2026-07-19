@@ -20,6 +20,8 @@ export interface LexiconEntry {
   lang: "es" | "en";
   explanation: string;
   suggestion: string;
+  /** Inclusive replacement used by the rewrite engine ("" = remove fragment). */
+  replacement: string;
 }
 
 export interface CategoryMeta {
@@ -59,4 +61,28 @@ export interface AnalysisResult {
   findings: Finding[];
   counts: CategoryCounts;
   totalFindings: number;
+}
+
+/** A single substitution applied by the rewrite engine. */
+export interface RewriteChange {
+  original: string;
+  replacement: string;
+  category: CategoryKey;
+  removed: boolean;
+}
+
+export interface RewriteResult {
+  /** Improved text with inclusive replacements applied. */
+  text: string;
+  changes: RewriteChange[];
+  /** Inclusivity score of the rewritten text (0–100). */
+  score: number;
+}
+
+/** Lightweight readability/bias metrics for a piece of text. */
+export interface TextMetrics {
+  words: number;
+  characters: number;
+  /** Findings per 100 words. */
+  biasDensity: number;
 }
