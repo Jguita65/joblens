@@ -58,6 +58,8 @@ export default function StatsPanel({ items }: { items: StoredAnalysis[] }) {
         <Stat label="Hallazgos totales" value={stats.totalFindings} />
       </div>
 
+      {items.length >= 2 && <TrendChart items={items} />}
+
       <div className="mt-5">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
           Sesgos más frecuentes
@@ -88,6 +90,57 @@ export default function StatsPanel({ items }: { items: StoredAnalysis[] }) {
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  );
+}
+
+/** Compact area chart of inclusivity scores over time (oldest → newest). */
+function TrendChart({ items }: { items: StoredAnalysis[] }) {
+  const points = useMemo(() => {
+    const ordered = [...items].sort(
+      (a, b) => +new Date(a.createdAt) - +new Date(b.createdAt)
+    );
+    const w = 600;
+    const h = 90;
+    const n = ordered.length;
+    return ordered.map((a, i) => ({
+      x: n === 1 ? w / 2 : (i / (n - 1)) * w,
+      y: h - (Math.max(0, Math.min(100, a.score)) / 100) * h,
+      score: a.score,
+    }));
+  }, [items]);
+
+  const w = 600;
+  const h = 90;
+  const line = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+  const area = `${line} L${w},${h} L0,${h} Z`;
+
+  return (
+    <div className="mt-5">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        Evolución de tu inclusividad
+      </p>
+      <svg
+        viewBox={`0 0 ${w} ${h}`}
+        className="h-24 w-full"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient id="trend" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={area} fill="url(#trend)" />
+        <path d={line} fill="none" stroke="#6366f1" strokeWidth="2" />
+        {points.map((p, i) => (
+          <circle key={i} cx={p.x} cy={p.y} r="3" fill="#6366f1" />
+        ))}
+      </svg>
+      <div className="flex justify-between text-[10px] text-slate-400">
+        <span>Más antiguo</span>
+        <span>Más reciente</span>
       </div>
     </div>
   );
