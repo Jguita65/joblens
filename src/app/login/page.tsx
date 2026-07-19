@@ -5,15 +5,24 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LogoMark } from "@/components/Logo";
+import { useLang } from "@/components/LanguageProvider";
 
-const FEATURES = [
-  ["🎯", "Analiza y mejora tus ofertas", "Detecta sesgos, reescribe de forma inclusiva y genera ofertas nuevas."],
-  ["📄", "Trabaja con candidatos", "Compatibilidad ATS, ranking de CV y plantillas de email."],
-  ["💬", "Entrevistas más justas", "Preguntas por competencia y las que conviene evitar."],
-];
+const FEATURES: Record<"es" | "en", [string, string, string][]> = {
+  es: [
+    ["🎯", "Analiza y mejora tus ofertas", "Detecta sesgos, reescribe de forma inclusiva y genera ofertas nuevas."],
+    ["📄", "Trabaja con candidatos", "Compatibilidad ATS, ranking de CV y plantillas de email."],
+    ["💬", "Entrevistas más justas", "Preguntas por competencia y las que conviene evitar."],
+  ],
+  en: [
+    ["🎯", "Analyze and improve your posts", "Detect bias, rewrite inclusively and generate new offers."],
+    ["📄", "Work with candidates", "ATS compatibility, CV ranking and email templates."],
+    ["💬", "Fairer interviews", "Competency questions and the ones to avoid."],
+  ],
+};
 
 export default function LoginPage() {
   const router = useRouter();
+  const { lang, setLang, t } = useLang();
   const [email, setEmail] = useState("test@test.com");
   const [password, setPassword] = useState("test1234");
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +35,7 @@ export default function LoginPage() {
     const res = await signIn("credentials", { email, password, redirect: false });
     setLoading(false);
     if (res?.error) {
-      setError("Email o contraseña incorrectos.");
+      setError(t("login.wrong"));
       return;
     }
     router.push("/inicio");
@@ -34,7 +43,13 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="app-bg flex min-h-screen items-center justify-center px-4 py-10">
+    <main className="app-bg relative flex min-h-screen items-center justify-center px-4 py-10">
+      <button
+        onClick={() => setLang(lang === "es" ? "en" : "es")}
+        className="absolute right-4 top-4 rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-white/60 dark:border-slate-700 dark:text-slate-300"
+      >
+        {lang === "es" ? "EN" : "ES"}
+      </button>
       <div className="grid w-full max-w-4xl gap-8 lg:grid-cols-2 lg:items-center">
         {/* Brand / features */}
         <div className="hidden lg:block">
@@ -45,17 +60,14 @@ export default function LoginPage() {
             </span>
           </div>
           <h1 className="text-3xl font-bold leading-tight text-slate-900 dark:text-white">
-            El kit de herramientas para una{" "}
+            {t("login.tagline1")}{" "}
             <span className="bg-gradient-to-r from-brand-600 to-pink-500 bg-clip-text text-transparent">
-              selección más justa y eficaz
+              {t("login.tagline2")}
             </span>
           </h1>
-          <p className="mt-3 text-slate-500 dark:text-slate-400">
-            Analiza ofertas, evalúa candidatos y comunica mejor: varias
-            herramientas para reclutadores en un solo sitio.
-          </p>
+          <p className="mt-3 text-slate-500 dark:text-slate-400">{t("login.subtitle")}</p>
           <ul className="mt-6 space-y-3">
-            {FEATURES.map(([icon, title, desc]) => (
+            {FEATURES[lang].map(([icon, title, desc]) => (
               <li key={title} className="flex gap-3">
                 <span className="text-xl">{icon}</span>
                 <div>
@@ -76,19 +88,17 @@ export default function LoginPage() {
               <LogoMark size={44} />
             </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">RecruitKit</h1>
-            <p className="mt-1 text-sm text-slate-500">
-              Herramientas para reclutadores
-            </p>
+            <p className="mt-1 text-sm text-slate-500">{t("login.slogan")}</p>
           </div>
 
           <h2 className="mb-4 hidden text-xl font-bold text-slate-900 dark:text-white lg:block">
-            Iniciar sesión
+            {t("login.signIn")}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Email
+                {t("login.email")}
               </label>
               <input
                 type="email"
@@ -100,7 +110,7 @@ export default function LoginPage() {
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Contraseña
+                {t("login.password")}
               </label>
               <input
                 type="password"
@@ -122,20 +132,20 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full rounded-lg bg-brand py-2.5 font-semibold text-white transition-colors hover:bg-brand-dark disabled:opacity-60"
             >
-              {loading ? "Entrando…" : "Iniciar sesión"}
+              {loading ? t("login.entering") : t("login.signIn")}
             </button>
           </form>
 
           <div className="mt-4 rounded-lg bg-slate-50 px-3 py-2 text-center text-xs text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
-            Cuenta de prueba precargada:{" "}
+            {t("login.testAccount")}{" "}
             <span className="font-mono font-semibold">test@test.com</span> /{" "}
             <span className="font-mono font-semibold">test1234</span>
           </div>
 
           <p className="mt-4 text-center text-sm text-slate-500">
-            ¿No tienes cuenta?{" "}
+            {t("login.noAccount")}{" "}
             <Link href="/register" className="font-medium text-brand hover:underline">
-              Regístrate
+              {t("login.register")}
             </Link>
           </p>
         </div>
