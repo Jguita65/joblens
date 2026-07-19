@@ -1,0 +1,574 @@
+{
+  "version": "1.0.0",
+  "note": "Lexicón curado bilingüe (ES/EN). Cada entrada define un patrón (regex sin límites de palabra: el analizador los añade con lookarounds Unicode y flags 'giu'). severity: 1 = leve, 2 = medio, 3 = grave.",
+  "categories": {
+    "gender": { "label": "Género", "color": "#8b5cf6" },
+    "age": { "label": "Edad", "color": "#f59e0b" },
+    "ableism": { "label": "Capacitismo", "color": "#14b8a6" },
+    "jargon": { "label": "Jerga excluyente / hype", "color": "#ec4899" },
+    "discriminatory": { "label": "Requisitos discriminatorios", "color": "#ef4444" },
+    "unrealistic": { "label": "Exigencia irreal", "color": "#3b82f6" }
+  },
+  "entries": [
+    {
+      "id": "gen-busca-hombre",
+      "term": "se busca hombre",
+      "pattern": "(?:se\\s+busca|buscamos|se\\s+necesita|necesitamos|se\\s+precisa|se\\s+requiere)\\s+(?:un\\s+)?hombre",
+      "category": "gender",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Exigir un género concreto para el puesto es discriminación directa por sexo y en la mayoría de jurisdicciones es ilegal.",
+      "suggestion": "Elimina la referencia al género: describe las funciones y competencias del puesto, no quién debe ocuparlo."
+    },
+    {
+      "id": "gen-busca-mujer",
+      "term": "se busca mujer",
+      "pattern": "(?:se\\s+busca|buscamos|se\\s+necesita|necesitamos|se\\s+precisa|se\\s+requiere)\\s+(?:una\\s+)?mujer",
+      "category": "gender",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Exigir un género concreto para el puesto es discriminación directa por sexo y en la mayoría de jurisdicciones es ilegal.",
+      "suggestion": "Elimina la referencia al género y céntrate en las funciones y competencias requeridas."
+    },
+    {
+      "id": "gen-solo-hombres",
+      "term": "solo hombres",
+      "pattern": "(?:solo|s[oó]lo|[uú]nicamente|exclusivamente|preferiblemente|preferentemente)\\s+hombres?",
+      "category": "gender",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Restringir o priorizar por género excluye a candidatas igualmente cualificadas y constituye discriminación.",
+      "suggestion": "Abre la posición a cualquier persona; valora únicamente aptitudes y experiencia."
+    },
+    {
+      "id": "gen-solo-mujeres",
+      "term": "solo mujeres",
+      "pattern": "(?:solo|s[oó]lo|[uú]nicamente|exclusivamente|preferiblemente|preferentemente)\\s+mujeres?",
+      "category": "gender",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Restringir o priorizar por género excluye a candidatos igualmente cualificados y constituye discriminación.",
+      "suggestion": "Abre la posición a cualquier persona; valora únicamente aptitudes y experiencia."
+    },
+    {
+      "id": "gen-chico-para",
+      "term": "chico/a para",
+      "pattern": "chic[oa]s?\\s+(?:para|que)",
+      "category": "gender",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "\"Chico/a\" marca género y edad; sugiere buscar a una persona joven de un sexo concreto.",
+      "suggestion": "Usa \"persona\" o el nombre del rol: \"persona para atención al cliente\"."
+    },
+    {
+      "id": "gen-salesman",
+      "term": "salesman",
+      "pattern": "salesm[ae]n",
+      "category": "gender",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Job titles ending in \"-man\" signal that the role is intended for men.",
+      "suggestion": "Usa una forma neutra: \"salesperson\" o \"sales representative\"."
+    },
+    {
+      "id": "gen-chairman",
+      "term": "chairman",
+      "pattern": "chairman",
+      "category": "gender",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Título con marca de género masculino.",
+      "suggestion": "Usa \"chair\" o \"chairperson\"."
+    },
+    {
+      "id": "gen-foreman",
+      "term": "foreman",
+      "pattern": "foreman",
+      "category": "gender",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Título con marca de género masculino.",
+      "suggestion": "Usa \"supervisor\" o \"site lead\"."
+    },
+    {
+      "id": "gen-manpower",
+      "term": "manpower",
+      "pattern": "manpower",
+      "category": "gender",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "\"Manpower\" asume una plantilla masculina.",
+      "suggestion": "Usa \"workforce\", \"staff\" o \"personal\"."
+    },
+    {
+      "id": "gen-waitress",
+      "term": "waitress / stewardess",
+      "pattern": "waitress|stewardess|air\\s+hostess",
+      "category": "gender",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Formas femeninas de oficios que deberían nombrarse de forma neutra.",
+      "suggestion": "Usa \"server\", \"flight attendant\"."
+    },
+    {
+      "id": "gen-he-will",
+      "term": "he will be responsible",
+      "pattern": "he\\s+(?:will|must|should|is\\s+expected\\s+to)",
+      "category": "gender",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Usar el pronombre masculino por defecto asume el género de la persona candidata.",
+      "suggestion": "Usa \"they\" o reformula en segunda persona: \"you will be responsible\"."
+    },
+    {
+      "id": "gen-ambiente-masculino",
+      "term": "ambiente masculino",
+      "pattern": "ambiente\\s+(?:muy\\s+)?masculino|entorno\\s+masculino",
+      "category": "gender",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Describir el ambiente por su género puede disuadir a candidatas.",
+      "suggestion": "Describe la cultura por sus valores (colaborativa, dinámica), no por el género de la plantilla."
+    },
+    {
+      "id": "age-joven",
+      "term": "joven",
+      "pattern": "j[oó]ven(?:es)?",
+      "category": "age",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Pedir personas \"jóvenes\" descarta por edad y puede ser discriminación etaria.",
+      "suggestion": "Si buscas cierta experiencia, dilo directamente (\"1-2 años de experiencia\") sin aludir a la edad."
+    },
+    {
+      "id": "age-recien-graduado",
+      "term": "recién graduado",
+      "pattern": "reci[eé]n\\s+(?:titulad|graduad|licenciad)[oa]s?",
+      "category": "age",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "\"Recién graduado\" es un proxy de edad que excluye a perfiles con más recorrido.",
+      "suggestion": "Especifica el nivel de experiencia requerido, no cuándo se estudió."
+    },
+    {
+      "id": "age-nativo-digital",
+      "term": "nativo digital",
+      "pattern": "nativ[oa]s?\\s+digital(?:es)?",
+      "category": "age",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "\"Nativo digital\" asocia competencia tecnológica con haber nacido en cierta época: sesgo por edad.",
+      "suggestion": "Enumera las herramientas o competencias digitales concretas que necesitas."
+    },
+    {
+      "id": "age-menores-de",
+      "term": "menores de X años",
+      "pattern": "menores?\\s+de\\s+\\d+\\s+a[ñn]os",
+      "category": "age",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Fijar un límite de edad máximo es discriminación etaria directa.",
+      "suggestion": "Elimina el límite de edad; evalúa por competencias."
+    },
+    {
+      "id": "age-maximo-anios",
+      "term": "máximo X años",
+      "pattern": "(?:edad\\s+)?m[aá]xim[ao]\\s+\\d+\\s+a[ñn]os",
+      "category": "age",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Un tope de edad excluye a personas por su fecha de nacimiento.",
+      "suggestion": "Elimina el tope de edad de los requisitos."
+    },
+    {
+      "id": "age-rango-anios",
+      "term": "entre X y Y años",
+      "pattern": "entre\\s+\\d+\\s+y\\s+\\d+\\s+a[ñn]os",
+      "category": "age",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Un rango de edad concreto suele ser discriminatorio salvo justificación legal muy específica.",
+      "suggestion": "Sustituye el rango de edad por el rango de experiencia requerido."
+    },
+    {
+      "id": "age-energia-juvenil",
+      "term": "energía juvenil",
+      "pattern": "energ[ií]a\\s+juvenil|esp[ií]ritu\\s+joven",
+      "category": "age",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Codifica una preferencia por personas jóvenes.",
+      "suggestion": "Describe la actitud buscada (proactividad, iniciativa) sin referencia a la edad."
+    },
+    {
+      "id": "age-young",
+      "term": "young / youthful",
+      "pattern": "young|youthful",
+      "category": "age",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Referirse a la edad deseada excluye a personas mayores.",
+      "suggestion": "Describe habilidades y actitud, no la edad."
+    },
+    {
+      "id": "age-recent-grad",
+      "term": "recent graduate",
+      "pattern": "recent\\s+grad(?:uate)?|new\\s+grad",
+      "category": "age",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Proxy de edad que limita el acceso de perfiles sénior.",
+      "suggestion": "Indica los años de experiencia requeridos en su lugar."
+    },
+    {
+      "id": "age-digital-native",
+      "term": "digital native",
+      "pattern": "digital\\s+native",
+      "category": "age",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Asocia habilidad digital con la edad.",
+      "suggestion": "Enumera las competencias digitales concretas."
+    },
+    {
+      "id": "age-energetic",
+      "term": "energetic",
+      "pattern": "energetic",
+      "category": "age",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "\"Energetic\" a menudo funciona como código para \"joven\".",
+      "suggestion": "Describe conductas medibles: \"proactivo\", \"con iniciativa\"."
+    },
+    {
+      "id": "abl-sin-discapacidad",
+      "term": "sin discapacidad",
+      "pattern": "sin\\s+discapacidad(?:es)?|no\\s+apto\\s+para\\s+personas\\s+con\\s+discapacidad",
+      "category": "ableism",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Excluir explícitamente a personas con discapacidad es discriminación y suele ser ilegal.",
+      "suggestion": "Elimina la exclusión. Si hay exigencias físicas reales, descríbelas como funciones esenciales concretas."
+    },
+    {
+      "id": "abl-facultades-fisicas",
+      "term": "plenas facultades físicas",
+      "pattern": "plena?s?\\s+facultades\\s+f[ií]sicas|sin\\s+limitaciones\\s+f[ií]sicas",
+      "category": "ableism",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Requisito genérico de aptitud física que excluye innecesariamente a personas con discapacidad.",
+      "suggestion": "Especifica solo las funciones esenciales reales del puesto (p. ej. \"desplazamientos frecuentes\")."
+    },
+    {
+      "id": "abl-buena-presencia",
+      "term": "buena presencia",
+      "pattern": "buena\\s+presencia|excelente\\s+presencia\\s+f[ií]sica",
+      "category": "ableism",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "\"Buena presencia\" es un criterio subjetivo ligado al aspecto físico que favorece sesgos por apariencia, edad o discapacidad.",
+      "suggestion": "Si el puesto requiere una imagen profesional, dilo de forma concreta y relacionada con la función."
+    },
+    {
+      "id": "abl-estado-salud",
+      "term": "perfecto estado de salud",
+      "pattern": "perfecto\\s+estado\\s+de\\s+salud|excelente\\s+estado\\s+de\\s+salud|visi[oó]n\\s+perfecta",
+      "category": "ableism",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Exigir un estado de salud \"perfecto\" excluye a personas con condiciones crónicas o discapacidad sin justificación real.",
+      "suggestion": "Describe únicamente las capacidades esenciales para las tareas concretas."
+    },
+    {
+      "id": "abl-cargar-kg",
+      "term": "capaz de cargar X kg",
+      "pattern": "(?:capaz\\s+de\\s+)?(?:cargar|levantar|transportar)\\s+(?:hasta\\s+)?\\d+\\s*kg",
+      "category": "ableism",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Un requisito de carga solo es válido si es una función esencial e inevitable del puesto; si no, excluye por capacidad física.",
+      "suggestion": "Incluye la carga solo si es esencial e indica si existen ayudas o adaptaciones disponibles."
+    },
+    {
+      "id": "abl-able-bodied",
+      "term": "able-bodied",
+      "pattern": "able[\\s-]?bodied|no\\s+disabilities",
+      "category": "ableism",
+      "severity": 3,
+      "lang": "en",
+      "explanation": "Excluye directamente a personas con discapacidad.",
+      "suggestion": "Elimina el término y describe solo las funciones esenciales del puesto."
+    },
+    {
+      "id": "abl-must-lift",
+      "term": "must be able to lift",
+      "pattern": "must\\s+be\\s+able\\s+to\\s+lift",
+      "category": "ableism",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Requisito de carga que solo es aceptable si es una función esencial del puesto.",
+      "suggestion": "Indica si es esencial y menciona adaptaciones razonables disponibles."
+    },
+    {
+      "id": "jar-ninja",
+      "term": "ninja",
+      "pattern": "ninjas?",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Jerga \"hype\" que no describe el rol y que investigaciones asocian a plantillas menos diversas.",
+      "suggestion": "Usa el nombre real del puesto: \"desarrollador/a\", \"especialista\"."
+    },
+    {
+      "id": "jar-rockstar",
+      "term": "rockstar",
+      "pattern": "rock\\s?stars?",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Término de moda que proyecta una cultura competitiva y puede disuadir a perfiles diversos.",
+      "suggestion": "Describe las responsabilidades concretas del puesto."
+    },
+    {
+      "id": "jar-crack",
+      "term": "crack",
+      "pattern": "cracks?",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Jerga informal que no aporta información sobre el rol y refuerza un tono excluyente.",
+      "suggestion": "Sustitúyelo por las competencias concretas que buscas."
+    },
+    {
+      "id": "jar-guerrero",
+      "term": "guerrero/a",
+      "pattern": "guerrer[oa]s?",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Metáfora bélica que fomenta una cultura de agresividad y competitividad excluyente.",
+      "suggestion": "Describe la actitud deseada de forma neutra: \"con iniciativa\", \"orientación a resultados\"."
+    },
+    {
+      "id": "jar-workaholic",
+      "term": "workaholic",
+      "pattern": "workaholic|adict[oa]\\s+al\\s+trabajo",
+      "category": "jargon",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Glorifica el exceso de trabajo y desincentiva a quienes valoran la conciliación (a menudo con cargas familiares).",
+      "suggestion": "Describe expectativas de dedicación realistas y sostenibles."
+    },
+    {
+      "id": "jar-guru",
+      "term": "gurú",
+      "pattern": "gur[uú]s?",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Jerga \"hype\" que no describe funciones ni nivel real.",
+      "suggestion": "Usa el título profesional y el nivel (junior/senior) correspondiente."
+    },
+    {
+      "id": "jar-todoterreno",
+      "term": "todoterreno",
+      "pattern": "todoterreno|todo\\s?terreno",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Sugiere disponibilidad y polivalencia ilimitadas sin definir el puesto.",
+      "suggestion": "Enumera las tareas concretas que abarcará la posición."
+    },
+    {
+      "id": "jar-superheroe",
+      "term": "superhéroe",
+      "pattern": "superh[eé]roes?|superhero(?:es)?",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Expectativa poco realista disfrazada de halago.",
+      "suggestion": "Describe responsabilidades alcanzables por una persona."
+    },
+    {
+      "id": "jar-hustler",
+      "term": "hustler / hustle",
+      "pattern": "hustler|hustle\\s+culture|hustle",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Asociado a una cultura de sobreesfuerzo que excluye a quien necesita equilibrio.",
+      "suggestion": "Describe el ritmo de trabajo de forma honesta y sostenible."
+    },
+    {
+      "id": "jar-guru-en",
+      "term": "guru / wizard / ninja (EN)",
+      "pattern": "wizard|guru",
+      "category": "jargon",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Jerga \"hype\" que no describe el rol.",
+      "suggestion": "Usa el título profesional real y el nivel de seniority."
+    },
+    {
+      "id": "dis-foto-obligatoria",
+      "term": "foto obligatoria",
+      "pattern": "foto\\s+(?:obligatoria|reciente|actual|de\\s+carn[eé]|tipo\\s+carn[eé]t?)|(?:adjuntar|enviar|incluir|con)\\s+(?:una\\s+)?fotograf[ií]a",
+      "category": "discriminatory",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Pedir foto facilita la discriminación por edad, género, etnia o aspecto físico; no aporta nada al proceso.",
+      "suggestion": "No solicites fotografía. Evalúa por currículum y competencias."
+    },
+    {
+      "id": "dis-estado-civil",
+      "term": "estado civil",
+      "pattern": "estado\\s+civil|(?:soltero|casad[oa])\\s+(?:preferible|obligatorio|imprescindible)?",
+      "category": "discriminatory",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "El estado civil es un dato personal irrelevante para el desempeño y su exigencia es discriminatoria.",
+      "suggestion": "Elimina cualquier referencia al estado civil."
+    },
+    {
+      "id": "dis-sin-hijos",
+      "term": "sin hijos / sin cargas familiares",
+      "pattern": "sin\\s+(?:hijos|cargas\\s+familiares|responsabilidades\\s+familiares)",
+      "category": "discriminatory",
+      "severity": 3,
+      "lang": "es",
+      "explanation": "Excluir a personas con responsabilidades familiares es discriminación (afecta especialmente a mujeres).",
+      "suggestion": "Elimina el requisito; describe la disponibilidad concreta si es esencial (p. ej. turnos)."
+    },
+    {
+      "id": "dis-nacionalidad",
+      "term": "nacionalidad concreta",
+      "pattern": "nacionalidad\\s+(?:espa[ñn]ola|concreta)|solo\\s+(?:espa[ñn]oles|nacionales)|[uú]nicamente\\s+nacionales",
+      "category": "discriminatory",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Exigir una nacionalidad sin base legal es discriminación por origen; normalmente basta con el permiso de trabajo.",
+      "suggestion": "Sustitúyelo por \"permiso de trabajo en vigor en la UE\" si es imprescindible."
+    },
+    {
+      "id": "dis-photo-en",
+      "term": "attach a photo",
+      "pattern": "attach\\s+(?:a\\s+)?(?:recent\\s+)?photo|include\\s+(?:a\\s+)?photo",
+      "category": "discriminatory",
+      "severity": 3,
+      "lang": "en",
+      "explanation": "Solicitar foto facilita la discriminación por aspecto, edad, género o etnia.",
+      "suggestion": "No pidas fotografía en la candidatura."
+    },
+    {
+      "id": "dis-marital-en",
+      "term": "marital status",
+      "pattern": "marital\\s+status",
+      "category": "discriminatory",
+      "severity": 3,
+      "lang": "en",
+      "explanation": "Dato personal irrelevante para el puesto y de exigencia discriminatoria.",
+      "suggestion": "Elimina cualquier pregunta sobre el estado civil."
+    },
+    {
+      "id": "dis-citizen-en",
+      "term": "must be a citizen",
+      "pattern": "must\\s+be\\s+(?:a\\s+)?(?:us|u\\.s\\.|eu|spanish)\\s+citizen",
+      "category": "discriminatory",
+      "severity": 2,
+      "lang": "en",
+      "explanation": "Exigir ciudadanía sin base legal discrimina por origen nacional.",
+      "suggestion": "Pide \"authorization to work\" en lugar de una ciudadanía concreta."
+    },
+    {
+      "id": "unr-maxima-disponibilidad",
+      "term": "máxima disponibilidad",
+      "pattern": "m[aá]xima\\s+disponibilidad|disponibilidad\\s+(?:total|absoluta|completa|plena)|disponibilidad\\s+24\\/?7",
+      "category": "unrealistic",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Exigir disponibilidad ilimitada penaliza a quien tiene cargas de cuidado y sugiere una cultura de sobrecarga.",
+      "suggestion": "Indica el horario y la disponibilidad concreta que realmente necesitas."
+    },
+    {
+      "id": "unr-resistencia-estres",
+      "term": "resistencia al estrés extrema",
+      "pattern": "resistencia\\s+al\\s+estr[eé]s(?:\\s+(?:extrem[ao]|elevad[ao]|alta))?|alta\\s+tolerancia\\s+a\\s+la\\s+frustraci[oó]n",
+      "category": "unrealistic",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Anuncia un entorno de alta presión de forma normalizada, lo que puede señalar malas condiciones.",
+      "suggestion": "Describe la carga de trabajo con honestidad y las medidas de apoyo disponibles."
+    },
+    {
+      "id": "unr-bajo-presion",
+      "term": "trabajar bajo presión",
+      "pattern": "(?:trabajar|trabajo)\\s+bajo\\s+presi[oó]n",
+      "category": "unrealistic",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "Frase comodín que suele encubrir sobrecarga y expectativas poco sostenibles.",
+      "suggestion": "Explica los picos de trabajo reales y cómo se gestionan en el equipo."
+    },
+    {
+      "id": "unr-sacrificio",
+      "term": "capacidad de sacrificio",
+      "pattern": "capacidad\\s+de\\s+sacrificio|esp[ií]ritu\\s+de\\s+sacrificio|entrega\\s+total",
+      "category": "unrealistic",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Normaliza el sacrificio personal como requisito, señal de cultura de sobreexigencia.",
+      "suggestion": "Describe compromisos concretos y razonables, no \"sacrificio\"."
+    },
+    {
+      "id": "unr-sin-horario",
+      "term": "sin horario / sin límite de horario",
+      "pattern": "sin\\s+horario(?:\\s+fijo)?|sin\\s+l[ií]mite\\s+de\\s+horario|disponibilidad\\s+horaria\\s+total",
+      "category": "unrealistic",
+      "severity": 2,
+      "lang": "es",
+      "explanation": "Sugiere jornadas indefinidas sin respeto por la desconexión.",
+      "suggestion": "Especifica la jornada y flexibilidad reales del puesto."
+    },
+    {
+      "id": "unr-pasion-ilimitada",
+      "term": "pasión ilimitada / por el trabajo",
+      "pattern": "pasi[oó]n\\s+(?:ilimitada|desmedida|por\\s+el\\s+trabajo)",
+      "category": "unrealistic",
+      "severity": 1,
+      "lang": "es",
+      "explanation": "La \"pasión\" ilimitada suele usarse para justificar sobrecarga sin compensación.",
+      "suggestion": "Describe el interés por el ámbito de forma realista y profesional."
+    },
+    {
+      "id": "unr-work-hard-play-hard",
+      "term": "work hard, play hard",
+      "pattern": "work\\s+hard,?\\s+play\\s+hard",
+      "category": "unrealistic",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Código cultural asociado a jornadas largas y ambientes poco inclusivos.",
+      "suggestion": "Describe la cultura por sus valores concretos y su equilibrio real."
+    },
+    {
+      "id": "unr-fast-paced",
+      "term": "fast-paced environment",
+      "pattern": "fast[\\s-]?paced\\s+environment",
+      "category": "unrealistic",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Frecuentemente encubre sobrecarga y falta de procesos.",
+      "suggestion": "Explica qué significa el ritmo en la práctica y cómo se apoya al equipo."
+    },
+    {
+      "id": "unr-wear-many-hats",
+      "term": "wear many hats",
+      "pattern": "wear\\s+(?:many|multiple)\\s+hats",
+      "category": "unrealistic",
+      "severity": 1,
+      "lang": "en",
+      "explanation": "Sugiere asumir múltiples roles indefinidos, señal de sobrecarga.",
+      "suggestion": "Enumera las responsabilidades concretas del puesto."
+    }
+  ]
+}
