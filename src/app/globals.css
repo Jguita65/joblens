@@ -2,18 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+html {
   color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  @apply bg-slate-50 text-slate-800 antialiased;
+  @apply bg-slate-50 text-slate-800 antialiased transition-colors;
+}
+html.dark body {
+  @apply bg-slate-950 text-slate-200;
+}
+
+/* Ambient page background with a subtle brand gradient. */
+.app-bg {
+  background-image:
+    radial-gradient(60rem 60rem at 110% -10%, rgba(99, 102, 241, 0.10), transparent 55%),
+    radial-gradient(50rem 50rem at -10% 0%, rgba(236, 72, 153, 0.08), transparent 50%);
+}
+html.dark .app-bg {
+  background-image:
+    radial-gradient(60rem 60rem at 110% -10%, rgba(99, 102, 241, 0.18), transparent 55%),
+    radial-gradient(50rem 50rem at -10% 0%, rgba(236, 72, 153, 0.12), transparent 50%);
+}
+
+/* Reusable card surface. */
+.card {
+  @apply rounded-2xl border border-slate-200 bg-white shadow-soft;
+}
+html.dark .card {
+  @apply border-slate-800 bg-slate-900/70;
 }
 
 /* Highlight marks injected by the analyzer view. */
 mark.jl-mark {
-  border-radius: 0.25rem;
-  padding: 0.05rem 0.15rem;
+  border-radius: 0.3rem;
+  padding: 0.05rem 0.2rem;
   color: #0f172a;
   cursor: help;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+html.dark mark.jl-mark {
+  color: #f8fafc;
+}
+mark.jl-mark[data-dim="true"] {
+  opacity: 0.28;
+  filter: grayscale(0.6);
+}
+
+/* Thin scrollbar for panels. */
+.thin-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 9999px;
 }

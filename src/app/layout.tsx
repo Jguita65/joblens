@@ -8,13 +8,27 @@ export const metadata: Metadata = {
     "Detecta lenguaje sesgado o excluyente en descripciones de puestos y reescríbelo de forma inclusiva.",
 };
 
+// Runs before paint to apply the saved theme and avoid a flash of the wrong one.
+const themeScript = `
+(function(){
+  try {
+    var t = localStorage.getItem('joblens:theme');
+    var m = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (t === 'dark' || (!t && m)) document.documentElement.classList.add('dark');
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>
