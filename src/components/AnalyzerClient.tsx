@@ -2,18 +2,25 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
-import { analyze, rewrite as rewriteText, textMetrics } from "@/lib/analyzer";
-import type { CategoryKey } from "@/lib/types";
+import {
+  analyze,
+  applyFindings,
+  rewrite as rewriteText,
+  textMetrics,
+} from "@/lib/analyzer";
+import { detectGoodPractices } from "@/lib/goodPractices";
+import type { CategoryKey, Finding } from "@/lib/types";
 import { saveAnalysis } from "@/lib/history-client";
-import { buildMarkdownReport, downloadTextFile } from "@/lib/report";
+import { buildWordBlob, downloadBlob, printPdfReport } from "@/lib/report";
 import { EXAMPLES } from "@/lib/examples";
 import HighlightedText from "./HighlightedText";
 import FindingsPanel from "./FindingsPanel";
 import ScoreGauge from "./ScoreGauge";
 import CategoryBreakdown from "./CategoryBreakdown";
 import RewritePanel from "./RewritePanel";
+import GoodPracticesPanel from "./GoodPracticesPanel";
 
-type Tab = "analysis" | "rewrite";
+type Tab = "analysis" | "rewrite" | "practices";
 
 export default function AnalyzerClient() {
   const { data: session } = useSession();
@@ -25,8 +32,8 @@ export default function AnalyzerClient() {
   const [saveState, setSaveState] = useState<
     "idle" | "saving" | "db" | "local" | "error"
   >("idle");
+  const [exporting, setExporting] = useState(false);
 
-  // Live analysis: debounce the analysed text so typing stays smooth.
   useEffect(() => {
     const id = setTimeout(() => setDebounced(text), 350);
     return () => clearTimeout(id);
@@ -41,6 +48,7 @@ export default function AnalyzerClient() {
     () => textMetrics(debounced, result.totalFindings),
     [debounced, result.totalFindings]
   );
+  const practices = useMemo(() => detectGoodPractices(debounced), [debounced]);
 
   const hasText = debounced.trim().length > 0;
   const filteredFindings = activeCat
@@ -55,6 +63,18 @@ export default function AnalyzerClient() {
     setText(exampleText);
     setActiveCat(null);
     if (!title) setTitle(label);
+  }
+
+  function applyOne(f: Finding) {
+    const updated = applyFindings(debounced, [f]);
+    setText(updated);
+    setDebounced(updated); // apply immediately, skip debounce flicker
+  }
+
+  function applyAll() {
+    setText(rewrite.text);
+    setDebounced(rewrite.text);
+    setTab("analysis");
   }
 
   async function handleSave() {
@@ -73,14 +93,30 @@ export default function AnalyzerClient() {
     }
   }
 
-  function handleExport() {
-    const report = buildMarkdownReport(
-      title || "Oferta de empleo",
-      debounced,
+  async function exportWord() {
+    setExporting(true);
+    try {
+      const blob = await buildWordBlob({
+        title: title || "Oferta de empleo",
+        originalText: debounced,
+        result,
+        rewrite,
+        practices,
+      });
+      downloadBlob("informe-joblens.docx", blob);
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  function exportPdf() {
+    printPdfReport({
+      title: title || "Oferta de empleo",
+      originalText: debounced,
       result,
-      rewrite
-    );
-    downloadTextFile("informe-joblens.md", report);
+      rewrite,
+      practices,
+    });
   }
 
   return (
@@ -133,11 +169,11 @@ export default function AnalyzerClient() {
             )}
           </div>
 
-          {/* Text metrics */}
-          <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+          <div className="mt-3 grid grid-cols-4 gap-2 text-center">
             <Metric label="Palabras" value={metrics.words} />
             <Metric label="Hallazgos" value={result.totalFindings} />
-            <Metric label="Densidad" value={`${metrics.biasDensity}`} suffix="/100 pal." />
+            <Metric label="Densidad" value={`${metrics.biasDensity}`} />
+            <Metric label="Prácticas" value={`${practices.present}/${practices.total}`} />
           </div>
         </div>
 
@@ -157,14 +193,14 @@ export default function AnalyzerClient() {
         )}
       </section>
 
-      {/* Right: score + findings/rewrite */}
+      {/* Right: score + panels */}
       <section className="space-y-4">
         {!hasText ? (
           <div className="card flex h-full min-h-[320px] flex-col items-center justify-center p-8 text-center">
             <div className="mb-3 text-4xl">📝</div>
             <p className="text-sm text-slate-400">
-              Pega una oferta o carga un ejemplo. El análisis aparece aquí en
-              tiempo real, sin pulsar nada.
+              Pega una oferta o carga un ejemplo. El análisis, la reescritura y las
+              buenas prácticas aparecen aquí en tiempo real.
             </p>
           </div>
         ) : (
@@ -179,8 +215,8 @@ export default function AnalyzerClient() {
                   </span>
                 </p>
                 <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                  Revisa los términos, aplica las sugerencias o usa la reescritura
-                  automática.
+                  Aplica las sugerencias, revisa las buenas prácticas y exporta el
+                  informe.
                 </p>
 
                 <div className="mt-3 flex flex-col gap-2">
@@ -200,19 +236,28 @@ export default function AnalyzerClient() {
                       {saveState === "saving" ? "Guardando…" : "Guardar"}
                     </button>
                     <button
-                      onClick={handleExport}
-                      className="rounded-lg border border-slate-300 px-4 py-1.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                      onClick={exportWord}
+                      disabled={exporting}
+                      className="inline-flex items-center gap-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 disabled:opacity-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                     >
-                      Exportar informe
+                      {exporting ? "Generando…" : "📄 Word"}
                     </button>
+                    <button
+                      onClick={exportPdf}
+                      className="inline-flex items-center gap-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      🖨️ PDF
+                    </button>
+                  </div>
+                  <div className="min-h-[16px] text-xs">
                     {saveState === "db" && (
-                      <span className="text-xs text-green-600">✓ En base de datos</span>
+                      <span className="text-green-600">✓ Guardado en base de datos</span>
                     )}
                     {saveState === "local" && (
-                      <span className="text-xs text-green-600">✓ En este navegador</span>
+                      <span className="text-green-600">✓ Guardado en este navegador</span>
                     )}
                     {saveState === "error" && (
-                      <span className="text-xs text-red-600">No se pudo guardar</span>
+                      <span className="text-red-600">No se pudo guardar</span>
                     )}
                   </div>
                 </div>
@@ -227,7 +272,6 @@ export default function AnalyzerClient() {
                 onToggle={setActiveCat}
               />
 
-              {/* Tabs */}
               <div className="mt-4 flex gap-1 rounded-lg bg-slate-100 p-1 dark:bg-slate-800">
                 <TabButton active={tab === "analysis"} onClick={() => setTab("analysis")}>
                   Hallazgos
@@ -235,18 +279,24 @@ export default function AnalyzerClient() {
                 <TabButton active={tab === "rewrite"} onClick={() => setTab("rewrite")}>
                   ✨ Reescritura
                 </TabButton>
+                <TabButton active={tab === "practices"} onClick={() => setTab("practices")}>
+                  ✅ Prácticas
+                </TabButton>
               </div>
 
               <div className="mt-4">
-                {tab === "analysis" ? (
-                  <FindingsPanel findings={filteredFindings} />
-                ) : (
+                {tab === "analysis" && (
+                  <FindingsPanel findings={filteredFindings} onApply={applyOne} />
+                )}
+                {tab === "rewrite" && (
                   <RewritePanel
                     original={debounced}
                     rewrite={rewrite}
                     originalScore={result.score}
+                    onApplyAll={applyAll}
                   />
                 )}
+                {tab === "practices" && <GoodPracticesPanel report={practices} />}
               </div>
             </div>
           </>
@@ -256,22 +306,11 @@ export default function AnalyzerClient() {
   );
 }
 
-function Metric({
-  label,
-  value,
-  suffix,
-}: {
-  label: string;
-  value: string | number;
-  suffix?: string;
-}) {
+function Metric({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 dark:border-slate-800 dark:bg-slate-800/50">
       <p className="text-lg font-bold text-slate-900 dark:text-white">{value}</p>
-      <p className="text-[10px] text-slate-400">
-        {label}
-        {suffix ? ` ${suffix}` : ""}
-      </p>
+      <p className="text-[10px] text-slate-400">{label}</p>
     </div>
   );
 }

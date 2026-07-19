@@ -30,7 +30,13 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-export default function FindingsPanel({ findings }: { findings: Finding[] }) {
+export default function FindingsPanel({
+  findings,
+  onApply,
+}: {
+  findings: Finding[];
+  onApply?: (finding: Finding) => void;
+}) {
   if (findings.length === 0) {
     return (
       <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-6 text-center text-sm text-green-700 dark:border-green-900/50 dark:bg-green-950/30 dark:text-green-400">
@@ -75,6 +81,14 @@ export default function FindingsPanel({ findings }: { findings: Finding[] }) {
               </p>
               <CopyButton text={f.suggestion} />
             </div>
+            {onApply && (
+              <button
+                onClick={() => onApply(f)}
+                className="mt-2 w-full rounded-md border border-brand/40 bg-brand/5 px-2.5 py-1 text-xs font-semibold text-brand transition-colors hover:bg-brand hover:text-white dark:border-brand-400/40 dark:text-brand-400 dark:hover:text-white"
+              >
+                Aplicar corrección al texto
+              </button>
+            )}
           </li>
         );
       })}

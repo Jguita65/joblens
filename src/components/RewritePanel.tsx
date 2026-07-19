@@ -8,10 +8,12 @@ export default function RewritePanel({
   original,
   rewrite,
   originalScore,
+  onApplyAll,
 }: {
   original: string;
   rewrite: RewriteResult;
   originalScore: number;
+  onApplyAll?: () => void;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -44,12 +46,22 @@ export default function RewritePanel({
             </span>
           )}
         </div>
-        <button
-          onClick={copyText}
-          className="rounded-lg bg-brand px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
-        >
-          {copied ? "✓ Copiado" : "Copiar versión mejorada"}
-        </button>
+        <div className="flex items-center gap-2">
+          {onApplyAll && rewrite.changes.length > 0 && (
+            <button
+              onClick={onApplyAll}
+              className="rounded-lg border border-brand px-4 py-1.5 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-white dark:border-brand-400 dark:text-brand-400 dark:hover:text-white"
+            >
+              Aplicar al texto
+            </button>
+          )}
+          <button
+            onClick={copyText}
+            className="rounded-lg bg-brand px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+          >
+            {copied ? "✓ Copiado" : "Copiar"}
+          </button>
+        </div>
       </div>
 
       {rewrite.changes.length === 0 ? (
