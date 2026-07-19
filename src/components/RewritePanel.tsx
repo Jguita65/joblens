@@ -6,7 +6,7 @@ import { aiGenerate, checkAi } from "@/lib/ai";
 import type { RewriteResult } from "@/lib/types";
 
 const AI_SYSTEM =
-  "Eres un experto en redacción inclusiva de ofertas de empleo en español. Reescribe la oferta eliminando cualquier sesgo (de género, edad, capacitismo, jerga o exigencia irreal) y usando lenguaje neutro e inclusivo. Mantén el sentido, el idioma y la estructura del texto. Devuelve ÚNICAMENTE la oferta reescrita, sin comentarios ni explicaciones.";
+  "Eres un experto en redacción inclusiva de ofertas de empleo en español. Reescribe la oferta eliminando TODOS estos sesgos: 1) masculino genérico (usa 'persona' o desdoblamiento, p. ej. 'desarrollador/a'); 2) referencias a la edad ('joven', 'recién graduado', 'nativo digital'); 3) capacitismo ('buena presencia', 'sin discapacidad'); 4) jerga vacía ('crack', 'ninja', 'rockstar'); 5) exigencia irreal ('máxima disponibilidad'); y sustituye 'salario competitivo' por 'salario acorde a la experiencia (se detalla en el proceso)'. Mantén el sentido, el idioma y la estructura del texto. Devuelve ÚNICAMENTE la oferta reescrita, sin comentarios ni explicaciones.";
 
 export default function RewritePanel({
   original,
