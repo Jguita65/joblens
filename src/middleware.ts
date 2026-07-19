@@ -16,5 +16,6 @@ export const config = {
     "/ranking/:path*",
     "/entrevista/:path*",
     "/plantillas/:path*",
+    "/boolean/:path*",
   ],
 };
