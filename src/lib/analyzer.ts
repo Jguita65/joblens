@@ -133,43 +133,50 @@ function cleanupText(text: string): string {
  * replacement (or removing the fragment). Deterministic and offset-safe:
  * substitutions are applied from the end of the string backwards.
  */
-export function rewrite(text: string, findings?: Finding[]): RewriteResult {
-  const items = (findings ?? analyze(text).findings)
-    .slice()
-    .sort((a, b) => a.start - b.start || b.end - a.end);
-
-  // Drop overlapping matches so we never substitute inside an earlier one.
-  const nonOverlapping: Finding[] = [];
+/** Non-overlapping subset of findings (earliest/longest wins), sorted by start. */
+function nonOverlapping(findings: Finding[]): Finding[] {
+  const items = findings.slice().sort((a, b) => a.start - b.start || b.end - a.end);
+  const out: Finding[] = [];
   let cursor = 0;
   for (const f of items) {
     if (f.start >= cursor) {
-      nonOverlapping.push(f);
+      out.push(f);
       cursor = f.end;
     }
   }
+  return out;
+}
 
-  const changes: RewriteChange[] = [];
+/**
+ * Apply the inclusive replacement of the given findings to the text and clean
+ * up. Substitutions run from the end so earlier offsets stay valid.
+ */
+export function applyFindings(text: string, findings: Finding[]): string {
+  const items = nonOverlapping(findings);
   let out = text;
-  // Apply from the end so earlier offsets stay valid.
-  for (let i = nonOverlapping.length - 1; i >= 0; i--) {
-    const f = nonOverlapping[i];
+  for (let i = items.length - 1; i >= 0; i--) {
+    const f = items[i];
     const entry = entryById.get(f.entryId);
-    const replacement = entry ? entry.replacement : "";
-    out = out.slice(0, f.start) + replacement + out.slice(f.end);
+    out = out.slice(0, f.start) + (entry ? entry.replacement : "") + out.slice(f.end);
   }
-  // Record changes in reading order.
-  for (const f of nonOverlapping) {
+  return cleanupText(out);
+}
+
+export function rewrite(text: string, findings?: Finding[]): RewriteResult {
+  const items = nonOverlapping(findings ?? analyze(text).findings);
+
+  const changes: RewriteChange[] = items.map((f) => {
     const entry = entryById.get(f.entryId);
     const replacement = entry ? entry.replacement : "";
-    changes.push({
+    return {
       original: f.match,
       replacement,
       category: f.category,
       removed: replacement.trim().length === 0,
-    });
-  }
+    };
+  });
 
-  const cleaned = cleanupText(out);
+  const cleaned = applyFindings(text, items);
   return { text: cleaned, changes, score: analyze(cleaned).score };
 }
 
