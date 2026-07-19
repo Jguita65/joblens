@@ -132,13 +132,22 @@ joblens/
 ## e. Funcionalidades principales
 
 1. **Registro / inicio de sesión** (Auth.js, sesión JWT).
-2. **Análisis de ofertas**: resaltado por categoría + panel de hallazgos con
-   explicación y sugerencia de reescritura.
-3. **Índice de inclusividad** (0–100) con etiqueta cualitativa.
-4. **Guardar análisis** y **consultar historial**.
-5. **Degradación elegante**: sin `DATABASE_URL`, la app usa `localStorage`; con
-   ella, persiste en Postgres.
-6. **Motor 100 % local y testeado** (Vitest), sin dependencias externas ni API keys.
+2. **Análisis en tiempo real**: mientras escribes, la app resalta por categoría y
+   actualiza el índice, sin pulsar nada.
+3. **Reescritura inclusiva automática** ✨: genera una versión corregida de la
+   oferta (original ↔ mejorada), con el índice **antes → después**, lista de
+   cambios aplicados, y botones de **copiar** y **exportar informe** (Markdown).
+4. **Filtro interactivo por categoría**: haz clic en una categoría para aislar sus
+   hallazgos y resaltados; barra de distribución de sesgos.
+5. **Índice de inclusividad** (0–100) con medidor animado y etiqueta cualitativa.
+6. **Métricas del texto**: palabras, nº de hallazgos y densidad de sesgo /100 palabras.
+7. **Biblioteca de ejemplos**: ofertas de muestra (muy sesgada, sutil, inclusiva).
+8. **Historial con estadísticas**: media de inclusividad, sesgos más frecuentes,
+   búsqueda y ordenación; guardado con **degradación elegante** (Postgres o
+   `localStorage`).
+9. **Modo claro / oscuro** con persistencia.
+10. **Motor 100 % local y testeado** (Vitest, 10 tests), sin dependencias externas
+    ni API keys.
 
 ---
 
