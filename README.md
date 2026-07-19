@@ -44,6 +44,7 @@ severidad, explicación y sugerencia.
 - **Tailwind CSS 3**
 - **Auth.js (NextAuth v5)** — Credentials provider con sesión **JWT** (funciona sin base de datos)
 - **Prisma 6** + **PostgreSQL** (opcional)
+- **docx** para exportar informes a Word
 - **Vitest** (tests del motor de análisis)
 - Despliegue en **Vercel**
 
@@ -135,18 +136,25 @@ joblens/
 2. **Análisis en tiempo real**: mientras escribes, la app resalta por categoría y
    actualiza el índice, sin pulsar nada.
 3. **Reescritura inclusiva automática** ✨: genera una versión corregida de la
-   oferta (original ↔ mejorada), con el índice **antes → después**, lista de
-   cambios aplicados, y botones de **copiar** y **exportar informe** (Markdown).
-4. **Filtro interactivo por categoría**: haz clic en una categoría para aislar sus
-   hallazgos y resaltados; barra de distribución de sesgos.
-5. **Índice de inclusividad** (0–100) con medidor animado y etiqueta cualitativa.
-6. **Métricas del texto**: palabras, nº de hallazgos y densidad de sesgo /100 palabras.
-7. **Biblioteca de ejemplos**: ofertas de muestra (muy sesgada, sutil, inclusiva).
-8. **Historial con estadísticas**: media de inclusividad, sesgos más frecuentes,
-   búsqueda y ordenación; guardado con **degradación elegante** (Postgres o
-   `localStorage`).
-9. **Modo claro / oscuro** con persistencia.
-10. **Motor 100 % local y testeado** (Vitest, 10 tests), sin dependencias externas
+   oferta (original ↔ mejorada) con el índice **antes → después** y la lista de
+   cambios. Puedes **aplicar las sugerencias una a una** o **todas de golpe**
+   (editor interactivo).
+4. **Detección de buenas prácticas** ✅: además de lo negativo, premia lo positivo
+   (transparencia salarial, flexibilidad/teletrabajo, igualdad y diversidad,
+   formación, beneficios y lenguaje inclusivo) con un medidor de completitud y
+   consejos de lo que falta.
+5. **Comparador de versiones**: compara dos textos y comprueba cuál es más
+   inclusivo (puntuaciones y diferencia).
+6. **Exportar informe profesional** en **Word (.docx)** y **PDF**.
+7. **Filtro interactivo por categoría** + barra de distribución de sesgos.
+8. **Índice de inclusividad** (0–100) con medidor animado y métricas del texto
+   (palabras, hallazgos, densidad, prácticas).
+9. **Biblioteca de ejemplos** (muy sesgada, sutil, inclusiva).
+10. **Historial con estadísticas y evolución temporal**: media de inclusividad,
+    sesgos más frecuentes, gráfico de progreso, búsqueda y ordenación; guardado
+    con **degradación elegante** (Postgres o `localStorage`).
+11. **Modo claro / oscuro** con persistencia y **logo/branding propios**.
+12. **Motor 100 % local y testeado** (Vitest, 12 tests), sin dependencias externas
     ni API keys.
 
 ---
