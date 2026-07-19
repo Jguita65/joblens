@@ -7,9 +7,9 @@ import Link from "next/link";
 import { LogoMark } from "@/components/Logo";
 
 const FEATURES = [
-  ["🎯", "Detección por categorías", "Género, edad, capacitismo, jerga, requisitos discriminatorios y exigencia irreal."],
-  ["✨", "Reescritura inclusiva", "Genera una versión corregida de la oferta en un clic."],
-  ["📊", "Índice e historial", "Puntúa la inclusividad de 0 a 100 y guarda tu evolución."],
+  ["🎯", "Analiza y mejora tus ofertas", "Detecta sesgos, reescribe de forma inclusiva y genera ofertas nuevas."],
+  ["📄", "Trabaja con candidatos", "Compatibilidad ATS, ranking de CV y plantillas de email."],
+  ["💬", "Entrevistas más justas", "Preguntas por competencia y las que conviene evitar."],
 ];
 
 export default function LoginPage() {
@@ -29,7 +29,7 @@ export default function LoginPage() {
       setError("Email o contraseña incorrectos.");
       return;
     }
-    router.push("/dashboard");
+    router.push("/inicio");
     router.refresh();
   }
 
@@ -41,18 +41,18 @@ export default function LoginPage() {
           <div className="mb-4 flex items-center gap-2">
             <LogoMark size={44} style={{ borderRadius: 12 }} />
             <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              JobLens
+              RecruitKit
             </span>
           </div>
           <h1 className="text-3xl font-bold leading-tight text-slate-900 dark:text-white">
-            Escribe ofertas de empleo{" "}
+            El kit de herramientas para una{" "}
             <span className="bg-gradient-to-r from-brand-600 to-pink-500 bg-clip-text text-transparent">
-              más justas e inclusivas
+              selección más justa y eficaz
             </span>
           </h1>
           <p className="mt-3 text-slate-500 dark:text-slate-400">
-            Detecta lenguaje sesgado o excluyente en tus ofertas y reescríbelo con
-            sugerencias listas para aplicar.
+            Analiza ofertas, evalúa candidatos y comunica mejor: varias
+            herramientas para reclutadores en un solo sitio.
           </p>
           <ul className="mt-6 space-y-3">
             {FEATURES.map(([icon, title, desc]) => (
@@ -75,9 +75,9 @@ export default function LoginPage() {
             <div className="mb-2 flex justify-center">
               <LogoMark size={44} />
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">JobLens</h1>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">RecruitKit</h1>
             <p className="mt-1 text-sm text-slate-500">
-              Analizador de sesgos en ofertas de empleo
+              Herramientas para reclutadores
             </p>
           </div>
 

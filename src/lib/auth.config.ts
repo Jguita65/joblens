@@ -18,10 +18,15 @@ export const authConfig = {
       const isLoggedIn = Boolean(auth?.user);
       const path = nextUrl.pathname;
       const isProtected =
+        path.startsWith("/inicio") ||
         path.startsWith("/dashboard") ||
         path.startsWith("/history") ||
         path.startsWith("/compare") ||
-        path.startsWith("/ats");
+        path.startsWith("/ats") ||
+        path.startsWith("/generador") ||
+        path.startsWith("/ranking") ||
+        path.startsWith("/entrevista") ||
+        path.startsWith("/plantillas");
 
       if (isProtected && !isLoggedIn) {
         return false;
