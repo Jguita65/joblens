@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 
 /**
- * JobLens brand mark: a rounded gradient badge with a lens that contains a
- * checkmark — "analiza y valida". Scalable and crisp at any size.
+ * RecruitKit brand mark: a rounded gradient badge with a lens that contains a
+ * checkmark. Scalable and crisp at any size.
  */
 export function LogoMark({
   size = 32,
@@ -57,7 +57,7 @@ export function Logo({ size = 32 }: { size?: number }) {
     <span className="flex items-center gap-2">
       <LogoMark size={size} />
       <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-        JobLens
+        RecruitKit
       </span>
     </span>
   );

@@ -54,7 +54,7 @@ export async function buildWordBlob(data: ReportData): Promise<Blob> {
   children.push(
     para([
       new TextRun({
-        text: `Generado con JobLens · ${new Date().toLocaleDateString("es-ES")}`,
+        text: `Generado con RecruitKit · ${new Date().toLocaleDateString("es-ES")}`,
         color: "94A3B8",
         size: 18,
       }),
@@ -168,7 +168,7 @@ export async function buildWordBlob(data: ReportData): Promise<Blob> {
   }
 
   const doc = new Document({
-    creator: "JobLens",
+    creator: "RecruitKit",
     title: `Informe de inclusividad — ${title}`,
     sections: [{ children }],
   });
@@ -226,7 +226,7 @@ export function printPdfReport(data: ReportData): void {
     ul{padding-left:18px}li{margin-bottom:8px}
   </style></head><body>
   <h1>Informe de inclusividad</h1>
-  <p class="muted"><i>${esc(title || "Oferta de empleo")}</i> · Generado con JobLens</p>
+  <p class="muted"><i>${esc(title || "Oferta de empleo")}</i> · Generado con RecruitKit</p>
   <h2>Resumen</h2>
   <p>Índice de inclusividad: <span class="score">${result.score}/100 (${scoreLabel(
     result.score

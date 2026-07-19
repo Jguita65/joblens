@@ -1,4 +1,4 @@
-// Shared domain types for JobLens.
+// Shared domain types for the analyzer.
 
 export type CategoryKey =
   | "gender"

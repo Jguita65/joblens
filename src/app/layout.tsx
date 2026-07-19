@@ -3,9 +3,9 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "JobLens — Inclusividad y ATS para selección de personal",
+  title: "RecruitKit — Herramientas para reclutadores",
   description:
-    "Detecta sesgos en ofertas de empleo, reescríbelas de forma inclusiva y comprueba la compatibilidad ATS entre una oferta y un CV.",
+    "Kit de herramientas para reclutadores: análisis de sesgos en ofertas, generador de ofertas, compatibilidad ATS, ranking de candidatos, preguntas de entrevista y plantillas de email.",
 };
 
 // Runs before paint to apply the saved theme and avoid a flash of the wrong one.
