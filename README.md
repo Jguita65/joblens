@@ -5,18 +5,22 @@ eficaz. Reúne varias herramientas en un panel:
 
 - **Analizador de sesgos**: detecta lenguaje excluyente en las ofertas (género,
   edad, capacitismo, jerga, requisitos discriminatorios, exigencia irreal) y
-  propone reescribirlo.
+  propone reescribirlo, con **reescritura asistida por IA** opcional.
 - **Generador de ofertas**: crea una oferta inclusiva y bien estructurada a
   partir de un formulario, analizada al momento.
 - **Compatibilidad ATS**: compara una oferta con un CV y calcula el encaje de
   palabras clave y la compatibilidad del currículum.
 - **Ranking de candidatos**: ordena varios CV según su encaje con la oferta.
+- **Buscador booleano**: genera cadenas de búsqueda para sourcing en LinkedIn o
+  Google.
 - **Preguntas de entrevista**: banco por competencia y preguntas a evitar.
 - **Plantillas de email**: invitación, oferta o rechazo, listas para enviar.
 - **Comparador de versiones** e **historial** con estadísticas.
 
-Los análisis se ejecutan en el propio servidor con un lexicón curado, sin llamar
-a servicios externos ni usar claves de API.
+El análisis principal se ejecuta en el propio servidor con un lexicón curado, sin
+depender de servicios externos. La reescritura con IA es **opcional** (ver
+[Variables de entorno](#variables-de-entorno)). La interfaz está disponible en
+**español e inglés**.
 
 ## Descripción
 
@@ -81,12 +85,13 @@ navegador (`localStorage`).
 ```
 src/
   app/
-    api/            rutas: auth, register, analyses
+    api/            rutas: auth, register, analyses, ai (Ollama/hospedado)
     inicio/         panel con todas las herramientas
     dashboard/      analizador de sesgos
     generador/      generador de ofertas
     ats/            compatibilidad oferta ↔ CV
     ranking/        ranking de candidatos
+    boolean/        buscador booleano
     entrevista/     preguntas de entrevista
     plantillas/     plantillas de email
     compare/        comparador de versiones
@@ -118,12 +123,15 @@ prisma/
 - Compatibilidad ATS: encaje de palabras clave oferta ↔ CV y comprobaciones de
   formato del currículum.
 - Ranking de candidatos: ordena varios CV por su encaje con la oferta.
+- Buscador booleano para sourcing (LinkedIn y Google X-ray).
 - Preguntas de entrevista por competencia y lista de preguntas a evitar.
 - Plantillas de email a candidatos (invitación, información, oferta, rechazo).
 - Comparador de dos versiones de una oferta.
 - Exportación de informes en Word (.docx) y PDF.
 - Historial con estadísticas y evolución, búsqueda y orden.
-- Registro e inicio de sesión, modo claro/oscuro.
+- Reescritura de ofertas asistida por IA (opcional: Ollama local o proveedor
+  hospedado compatible con OpenAI).
+- Registro e inicio de sesión, modo claro/oscuro e idioma español/inglés.
 
 ## Usuario de prueba
 
@@ -146,6 +154,8 @@ Copia [`.env.example`](.env.example) a `.env`:
 | `AUTH_SECRET` | Sí (producción) | Firma los JWT de sesión. `npx auth secret`. |
 | `AUTH_TEST_PASSWORD_HASH` | No | Hash bcrypt de la contraseña de prueba. |
 | `DATABASE_URL` | No | Conexión a Postgres. Sin ella, el historial usa `localStorage`. |
+| `OLLAMA_URL` / `OLLAMA_MODEL` | No | IA local con Ollama (solo funciona donde el servidor alcance Ollama). |
+| `AI_API_URL` / `AI_API_KEY` / `AI_MODEL` | No | IA hospedada (endpoint compatible con OpenAI) para tener IA en el deploy público. |
 
 Con base de datos:
 
@@ -153,6 +163,25 @@ Con base de datos:
 npx prisma db push     # crea las tablas
 npx prisma db seed     # crea test@test.com
 ```
+
+### Reescritura con IA (opcional)
+
+La reescritura asistida por IA funciona de dos formas; si no configuras ninguna,
+la app usa la reescritura determinista del lexicón.
+
+- **Local (Ollama):** define `OLLAMA_URL` (por defecto `http://localhost:11434`) y
+  `OLLAMA_MODEL` (por defecto `qwen2.5:3b`, ligero). Solo funciona ejecutando la
+  app en un equipo que pueda alcanzar Ollama.
+- **Hospedada (para todos en el deploy):** define `AI_API_URL`, `AI_API_KEY` y
+  `AI_MODEL` apuntando a cualquier proveedor compatible con OpenAI (Groq,
+  OpenRouter, Together…). La clave vive solo en el servidor. Ejemplo con la capa
+  gratuita de Groq:
+
+  ```
+  AI_API_URL = https://api.groq.com/openai/v1
+  AI_API_KEY = <tu-clave-de-groq>
+  AI_MODEL   = llama-3.3-70b-versatile
+  ```
 
 ## Despliegue
 
@@ -166,3 +195,15 @@ Para desplegar en Vercel basta con importar el repositorio y definir
 
 - Presentación: [`slides.md`](slides.md)
 - Guion del vídeo: [`guion-video.md`](guion-video.md)
+
+## Datos de entrega
+
+```
+Nombre completo: Juan Ignacio Guitart
+Email: juanignacioguitart@gmail.com
+URL del repositorio: https://github.com/Jguita65/joblens
+URL de despliegue: https://joblens-puce.vercel.app
+URL de las slides: https://github.com/Jguita65/joblens/blob/main/slides.md
+URL del vídeo: [PENDIENTE]
+Usuario/contraseña de prueba: test@test.com / test1234
+```
