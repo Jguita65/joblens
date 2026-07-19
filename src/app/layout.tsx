@@ -3,9 +3,9 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "JobLens — Analizador de sesgos en ofertas de empleo",
+  title: "JobLens — Inclusividad y ATS para selección de personal",
   description:
-    "Detecta lenguaje sesgado o excluyente en descripciones de puestos y reescríbelo de forma inclusiva.",
+    "Detecta sesgos en ofertas de empleo, reescríbelas de forma inclusiva y comprueba la compatibilidad ATS entre una oferta y un CV.",
 };
 
 // Runs before paint to apply the saved theme and avoid a flash of the wrong one.
