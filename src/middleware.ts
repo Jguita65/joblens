@@ -17,5 +17,6 @@ export const config = {
     "/entrevista/:path*",
     "/plantillas/:path*",
     "/boolean/:path*",
+    "/guia/:path*",
   ],
 };

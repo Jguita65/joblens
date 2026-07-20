@@ -27,7 +27,8 @@ export const authConfig = {
         path.startsWith("/ranking") ||
         path.startsWith("/entrevista") ||
         path.startsWith("/plantillas") ||
-        path.startsWith("/boolean");
+        path.startsWith("/boolean") ||
+        path.startsWith("/guia");
 
       if (isProtected && !isLoggedIn) {
         return false;

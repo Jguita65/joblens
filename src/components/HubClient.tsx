@@ -9,12 +9,20 @@ export default function HubClient({ name }: { name: string }) {
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
           {t("hub.greeting", { name })}
         </h1>
         <p className="mt-1 text-slate-500 dark:text-slate-400">{t("hub.intro")}</p>
       </div>
+
+      <Link
+        href="/guia"
+        className="mb-6 flex items-center justify-between rounded-xl border border-brand/30 bg-brand/5 px-4 py-3 text-sm font-medium text-brand transition-colors hover:bg-brand/10 dark:border-brand-400/30 dark:text-brand-400"
+      >
+        <span>📘 {t("hub.guideBanner")}</span>
+        <span>→</span>
+      </Link>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {TOOLS.map((tool) => (

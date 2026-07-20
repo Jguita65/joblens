@@ -90,6 +90,16 @@ const DICT: Dict = {
     es: "Genera cadenas de búsqueda booleana para sourcing en LinkedIn o Google.",
     en: "Build boolean search strings for sourcing on LinkedIn or Google.",
   },
+  "page.guia.title": { es: "Guía de uso", en: "How to use" },
+  "page.guia.sub": {
+    es: "Cómo sacar partido a cada herramienta de RecruitKit, paso a paso.",
+    en: "How to get the most out of each RecruitKit tool, step by step.",
+  },
+  "nav.guia": { es: "Guía", en: "Guide" },
+  "hub.guideBanner": {
+    es: "¿Primera vez? Lee la guía de uso",
+    en: "First time? Read the usage guide",
+  },
 };
 
 interface Ctx {

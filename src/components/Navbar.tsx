@@ -35,6 +35,9 @@ export default function Navbar() {
           <Link href="/inicio" className={linkClass(pathname === "/inicio")}>
             {t("nav.inicio")}
           </Link>
+          <Link href="/guia" className={linkClass(pathname === "/guia")}>
+            {t("nav.guia")}
+          </Link>
 
           {/* Tools dropdown */}
           <div className="relative">
