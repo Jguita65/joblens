@@ -206,6 +206,6 @@ Email: juanignacioguitart@gmail.com
 URL del repositorio: https://github.com/Jguita65/joblens
 URL de despliegue: https://joblens-puce.vercel.app
 URL de las slides: https://github.com/Jguita65/joblens/blob/main/slides.pptx
-URL del vídeo: [PENDIENTE]
+URL del vídeo: https://drive.google.com/file/d/1-X2a1AI-sHx_fpyNa1-hvup2PPIr8ygF/view?usp=sharing
 Usuario/contraseña de prueba: test@test.com / test1234
 ```
