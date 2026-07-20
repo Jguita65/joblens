@@ -1,111 +1,94 @@
-# 🎬 Guion del vídeo — RecruitKit (2–4 minutos)
+# Guion del vídeo — RecruitKit (2–4 minutos)
 
 > **Duración objetivo:** 2:30–3:30 min.
 > **Pantalla:** obligatoria (graba la pantalla mostrando la app).
-> **Rostro:** opcional (puedes añadir tu cámara en una esquina, pero no es necesario).
+> **Rostro:** opcional (puedes añadir tu cámara en una esquina).
 > **Idioma:** español.
 
 ---
 
 ## 0. Antes de grabar (checklist)
 
-- [ ] Arranca la app: `npm run dev` (o abre la URL de producción).
-- [ ] Ten a mano una oferta de ejemplo (puedes usar el botón **"Cargar ejemplo"**).
+- [ ] Arranca la app (`npm run dev`) o abre la URL de producción.
+- [ ] Inicia sesión con la cuenta de prueba para tenerla lista.
+- [ ] Si vas a enseñar la IA, comprueba que responde (Ollama local o Groq en la web).
 - [ ] Cierra pestañas y notificaciones que distraigan.
-- [ ] Comprueba el micrófono (habla claro y sin prisa).
-- [ ] Resolución recomendada: 1920×1080. Zoom del navegador al 100–110 %.
+- [ ] Resolución 1920×1080, zoom del navegador al 100–110 %.
 
 ---
 
 ## 1. Presentación (0:00 – 0:25)
 
-> **[EN PANTALLA: la pantalla de login de RecruitKit]**
+> **[EN PANTALLA: login de RecruitKit]**
 
-**Guion:**
 > "Hola, soy Juan Ignacio Guitart y este es mi proyecto: **RecruitKit**, un kit de
-> herramientas para reclutadores. Reúne en un panel varias herramientas para una
-> selección más justa y eficaz: desde analizar y generar ofertas hasta evaluar
-> candidatos, preparar entrevistas y comunicarse con ellos. En el vídeo me centro
-> en la herramienta principal, el analizador de sesgos."
+> herramientas para reclutadores. Reúne en un panel varias herramientas para hacer
+> una selección más justa y eficaz: desde analizar y redactar ofertas hasta
+> evaluar candidatos, preparar entrevistas y comunicarse con ellos."
+
+*(Inicia sesión con `test@test.com` / `test1234`.)*
 
 ---
 
-## 2. El problema y el login (0:25 – 0:50)
+## 2. El panel de inicio (0:25 – 0:45)
 
-> **[EN PANTALLA: señala la caja de credenciales de prueba; inicia sesión]**
+> **[EN PANTALLA: el panel /inicio con las tarjetas de herramientas]**
 
-**Guion:**
-> "Muchas ofertas contienen, sin querer, sesgos de género, edad, capacitismo o
-> jerga tipo 'ninja' o 'rockstar' que reducen la diversidad de candidaturas.
-> Inicio sesión con la cuenta de prueba —todo funciona incluso sin base de datos,
-> gracias a una sesión JWT."
-
-*(Escribe `test@test.com` / `test1234` o usa los valores precargados y pulsa
-"Iniciar sesión".)*
+> "Al entrar llego al panel, con todas las herramientas a un clic. Arriba puedo
+> cambiar el **idioma** (español/inglés) y el **tema** claro u oscuro. Empecemos
+> por la herramienta principal: el analizador de sesgos."
 
 ---
 
-## 3. Recorrido por las funcionalidades (0:50 – 2:10)
+## 3. Analizador de sesgos (0:45 – 1:45)
 
-### 3.1 Analizar una oferta
+> **[EN PANTALLA: "Cargar ejemplo" → el análisis aparece en vivo]**
 
-> **[EN PANTALLA: pulsa "Cargar ejemplo" y luego "Analizar"]**
+> "Pego una oferta y, al instante, RecruitKit **resalta los fragmentos
+> problemáticos con un color por categoría**: género, edad, capacitismo, jerga…
+> A la derecha tengo el **Índice de inclusividad**, de 0 a 100, y la lista de
+> **hallazgos**, cada uno con su explicación y una **sugerencia de reescritura**."
 
-**Guion:**
-> "Pego una oferta y pulso Analizar. Al instante, RecruitKit **resalta cada
-> fragmento problemático con un color por categoría**."
+> **[EN PANTALLA: pestaña "Reescritura"; pulsa "Reescribir con IA"]**
 
-### 3.2 El texto resaltado
-
-> **[EN PANTALLA: pasa el ratón por encima de varios términos resaltados]**
-
-**Guion:**
-> "Aquí vemos términos como 'se busca hombre' en Género, 'joven' en Edad,
-> 'sin discapacidad' en Capacitismo o 'ninja' y 'crack' en jerga excluyente.
-> Si paso el ratón, veo la explicación y la sugerencia."
-
-### 3.3 El panel de hallazgos y el índice
-
-> **[EN PANTALLA: señala el medidor de índice y desplázate por el panel de hallazgos]**
-
-**Guion:**
-> "A la derecha tengo el **Índice de inclusividad**, de 0 a 100. Esta oferta
-> puntúa muy bajo. Y debajo, la **lista de hallazgos**: cada uno con su categoría,
-> severidad, por qué es problemático y **cómo reescribirlo** de forma inclusiva."
-
-### 3.4 Guardar e historial
-
-> **[EN PANTALLA: pulsa "Guardar análisis" y luego ve a "Historial"]**
-
-**Guion:**
-> "Guardo el análisis y me voy al **Historial**, donde quedan todos mis análisis
-> anteriores. Si hay base de datos configurada se guardan en Postgres; si no, en
-> el propio navegador."
+> "Puedo aplicar las sugerencias una a una, o usar la **reescritura con IA**, que
+> genera una versión inclusiva del texto completo. Y en la pestaña de **buenas
+> prácticas** me dice qué falta: rango salarial, flexibilidad, igualdad…"
 
 ---
 
-## 4. Detalles técnicos (2:10 – 2:50)
+## 4. El resto de herramientas (1:45 – 2:30)
 
-> **[EN PANTALLA: opcional — muestra brevemente `src/lib/lexicon.json` y `analyzer.ts`]**
+> **[EN PANTALLA: recorre rápido el menú "Herramientas"]**
 
-**Guion:**
-> "Por dentro, el análisis se apoya en un **lexicón curado bilingüe** en JSON, con
-> unas cincuenta reglas, cada una con su patrón, severidad, explicación y
-> sugerencia. Está construido con **Next.js 15, TypeScript, Tailwind, Auth.js y
-> Prisma**, con **tests en Vitest** para el motor, y desplegado en **Vercel**."
+> "El kit cubre todo el proceso:
+> - El **generador de ofertas**, que crea una oferta inclusiva desde un formulario.
+> - La **compatibilidad ATS**, que compara una oferta con un CV.
+> - El **ranking de candidatos**, que ordena varios CV por su encaje.
+> - El **buscador booleano**, para sourcing en LinkedIn.
+> - Las **preguntas de entrevista** y las **plantillas de email** al candidato."
+
+*(Muestra 1-2 de ellas brevemente, p. ej. el ranking y el buscador booleano.)*
 
 ---
 
-## 5. Cierre y enlaces (2:50 – 3:15)
+## 5. Detalles técnicos (2:30 – 3:00)
 
-> **[EN PANTALLA: vuelve al dashboard o muestra el repo de GitHub]**
+> "Por dentro, el análisis se apoya en un **lexicón curado** en JSON; la IA es
+> **opcional** (Ollama en local o un proveedor hospedado). Está hecho con
+> **Next.js 15, TypeScript, Tailwind, Auth.js y Prisma**, con **tests en Vitest**,
+> y funciona **con o sin base de datos**. Desplegado en **Vercel**."
 
-**Guion:**
-> "Y esto es RecruitKit: un kit de herramientas para hacer una selección más justa
-> y eficaz. Tenéis el código en GitHub y la app desplegada en los enlaces de la
-> descripción. ¡Gracias por ver el vídeo!"
+---
 
-**Enlaces para mostrar / mencionar:**
+## 6. Cierre (3:00 – 3:20)
+
+> **[EN PANTALLA: vuelve al panel o al repo de GitHub]**
+
+> "Y esto es RecruitKit: un kit de herramientas para una selección más justa y
+> eficaz. Tenéis el código y la app en los enlaces de la descripción. ¡Gracias!"
+
+**Enlaces:**
 - Repositorio: https://github.com/Jguita65/joblens
 - App: https://joblens-puce.vercel.app
 
@@ -113,10 +96,8 @@
 
 ## Consejos de grabación
 
-- **Habla despacio** y haz una pausa breve entre secciones.
-- **Mueve el ratón despacio** hacia lo que mencionas; ayuda a seguir la acción.
-- Si te trabas, **para y repite la frase**: luego se recorta en edición.
-- Herramientas de captura: **OBS Studio** (gratis), Loom, o la grabación nativa
-  (Windows: `Win + Alt + R`; macOS: `Cmd + Shift + 5`).
-- Exporta en 1080p, formato MP4.
-- Revisa que **se oye bien** antes de dar por buena la toma.
+- **Habla despacio** y haz una pausa entre secciones.
+- **Mueve el ratón despacio** hacia lo que mencionas.
+- Si te trabas, para y repite la frase (se recorta en edición).
+- Captura con **OBS Studio** (gratis) o la grabación nativa de Windows (`Win + Alt + R`).
+- Exporta en 1080p, formato MP4, y revisa que se oye bien.

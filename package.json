@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "slides:pptx": "node scripts/build-pptx.mjs"
   },
   "prisma": {
     "seed": "node prisma/seed.mjs"
@@ -33,6 +34,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.2.10",
     "postcss": "^8.5.19",
+    "pptxgenjs": "^4.0.1",
     "prisma": "^6.19.3",
     "tailwindcss": "^3.4.19",
     "typescript": "^6.0.3",

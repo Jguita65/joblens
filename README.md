@@ -193,7 +193,8 @@ Para desplegar en Vercel basta con importar el repositorio y definir
 
 ## Documentación del proyecto
 
-- Presentación: [`slides.md`](slides.md)
+- Presentación: [`slides.pptx`](slides.pptx) (PowerPoint) · [`slides.md`](slides.md)
+  (fuente). El `.pptx` se regenera con `npm run slides:pptx`.
 - Guion del vídeo: [`guion-video.md`](guion-video.md)
 
 ## Datos de entrega
