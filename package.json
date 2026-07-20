@@ -2,7 +2,7 @@
   "name": "joblens",
   "version": "1.0.0",
   "private": true,
-  "description": "JobLens — Analizador de sesgos en ofertas de empleo",
+  "description": "RecruitKit — kit de herramientas para reclutadores",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

@@ -1,4 +1,4 @@
-// Prisma schema for JobLens.
+// Prisma schema for RecruitKit.
 // The database is OPTIONAL: it is only used when DATABASE_URL is defined.
 // When it is absent the app degrades gracefully to browser localStorage.
 
