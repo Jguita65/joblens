@@ -3,6 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { atsReport } from "@/lib/ats";
 import ScoreGauge from "./ScoreGauge";
+import { useAi } from "./useAi";
+
+const AI_SYSTEM =
+  "Eres un reclutador técnico experto. Analiza el encaje de un CV con una oferta de empleo. Responde en español, breve y estructurado, exactamente con estas tres secciones: 'Fortalezas:' (2-3 viñetas), 'Carencias:' (2-3 viñetas) y 'Recomendación:' (una de: Encaja / A valorar / No encaja, seguida de una frase). Básate solo en la información del CV; no inventes datos.";
 
 const SAMPLE_OFFER = `Buscamos desarrollador/a backend con experiencia en Node.js, TypeScript y PostgreSQL.
 Responsabilidades: diseñar APIs REST, trabajar con Docker y AWS, y colaborar en un equipo ágil (Scrum).
@@ -37,6 +41,21 @@ export default function AtsClient() {
 
   const report = useMemo(() => atsReport(dOffer, dCv), [dOffer, dCv]);
   const ready = dOffer.trim() && dCv.trim();
+
+  const ai = useAi();
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+
+  useEffect(() => {
+    setAiAnalysis(null);
+  }, [dOffer, dCv]);
+
+  async function analyzeWithAi() {
+    const text = await ai.run(
+      `OFERTA:\n${dOffer}\n\nCV:\n${dCv}`,
+      AI_SYSTEM
+    );
+    if (text) setAiAnalysis(text);
+  }
 
   return (
     <div className="space-y-4">
@@ -96,6 +115,7 @@ export default function AtsClient() {
           palabras clave que te faltan.
         </div>
       ) : (
+        <>
         <div className="grid gap-4 lg:grid-cols-3">
           {/* Score */}
           <div className="card flex flex-col items-center justify-center gap-2 p-5">
@@ -182,6 +202,34 @@ export default function AtsClient() {
             </ul>
           </div>
         </div>
+
+        {/* AI candidate analysis */}
+        <div className="card mt-4 border-brand/30 p-4 dark:border-brand-400/30">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+              ✨ Análisis del candidato con IA
+              <span className="ml-2 text-xs font-normal text-slate-400">
+                {ai.available
+                  ? "Resumen de fortalezas, carencias y recomendación."
+                  : "IA no disponible en este entorno."}
+              </span>
+            </h3>
+            <button
+              onClick={analyzeWithAi}
+              disabled={!ai.available || ai.loading}
+              className="rounded-lg bg-brand px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark disabled:opacity-40"
+            >
+              {ai.loading ? "Analizando…" : "Analizar con IA"}
+            </button>
+          </div>
+          {ai.error && <p className="mt-2 text-xs text-red-600">{ai.error}</p>}
+          {aiAnalysis && (
+            <div className="thin-scroll mt-3 max-h-72 overflow-y-auto whitespace-pre-wrap rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm leading-relaxed text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100">
+              {aiAnalysis}
+            </div>
+          )}
+        </div>
+        </>
       )}
     </div>
   );
