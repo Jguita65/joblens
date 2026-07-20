@@ -5,15 +5,15 @@ paginate: true
 ---
 
 <!--
-Estas slides existen en dos formatos:
-- slides.md (este archivo, editable en texto / Marp).
-- slides.pptx (PowerPoint, para entregar). Se genera con: npm run slides:pptx
-Sustituye los bloques «[CAPTURA: ...]» por capturas reales si lo deseas.
+Fuente editable de la presentación. El entregable es slides.pptx (PowerPoint),
+que se genera con: npm run slides:pptx
 -->
 
 # RecruitKit
 
-## Herramientas para una selección más justa y eficaz
+## El kit de herramientas para una selección más justa y eficaz
+
+Analiza y redacta ofertas · Evalúa candidatos · Entrevista y comunica
 
 **Juan Ignacio Guitart** · TFM · 2026
 
@@ -22,63 +22,71 @@ Sustituye los bloques «[CAPTURA: ...]» por capturas reales si lo deseas.
 ## El problema
 
 - Las **ofertas de empleo** contienen, a menudo sin querer, lenguaje sesgado
-  (género, edad, capacitismo, jerga) que reduce la diversidad de candidaturas y
-  puede ser ilegal.
-- El **proceso de selección** está fragmentado: redactar la oferta, filtrar CVs,
-  buscar candidatos, entrevistar y comunicar… en herramientas dispersas.
+  (género, edad, capacitismo, jerga) que reduce la diversidad y puede ser ilegal.
+- El **proceso de selección** está fragmentado: redactar, filtrar CVs, buscar
+  candidatos, entrevistar y comunicar… en herramientas dispersas.
+- Faltan herramientas sencillas que unifiquen el proceso con criterios de
+  inclusividad.
 
 ---
 
-## La solución
+## La solución: RecruitKit
 
-**RecruitKit**: un panel con varias herramientas que cubren el proceso de
-selección, con foco en la inclusividad.
+Un panel con varias herramientas que cubren el proceso de selección.
 
-- Análisis **local y determinista** + **IA opcional**.
-- Interfaz en **español e inglés**.
-- Desplegable **gratis**, sin infraestructura obligatoria.
+- ⚖️ **Más justo** — detecta y corrige sesgos; fomenta la diversidad.
+- ⏱️ **Más eficaz** — redacta, filtra y comunica en menos tiempo.
+- 🔒 **Sin ataduras** — funciona con o sin base de datos y con IA opcional.
+- 🌍 **Accesible** — español e inglés, claro/oscuro, desplegado gratis.
 
 ---
 
 ## Las herramientas
 
-- 🎯 **Analizador de sesgos**
-- 📝 **Generador de ofertas**
-- 📄 **Compatibilidad ATS** (oferta ↔ CV)
-- 🏆 **Ranking de candidatos**
-- 🔎 **Buscador booleano** (sourcing)
-- 💬 **Preguntas de entrevista**
-- ✉️ **Plantillas de email**
-- ⚖️ **Comparador** y 🗂️ **Historial**
+- 🎯 Analizador de sesgos · 📝 Generador de ofertas
+- 📄 Compatibilidad ATS · 🏆 Ranking de candidatos
+- 🔎 Buscador booleano · 💬 Preguntas de entrevista
+- ✉️ Plantillas de email · ⚖️ Comparador e historial
 
 ---
 
 ## Analizador de sesgos
 
 - Resalta los fragmentos problemáticos **por categoría** y explica cada hallazgo.
-- **Índice de inclusividad** de 0 a 100.
-- Detección de **buenas prácticas** (salario, flexibilidad, igualdad…).
-- **Reescritura**: aplica las sugerencias una a una o toda de golpe.
-
-[CAPTURA: analizador con texto resaltado, índice y hallazgos]
+- **Índice de inclusividad** (0–100) y detección de buenas prácticas.
+- **Reescritura**: aplica las sugerencias una a una, toda de golpe o con IA.
+- Exporta un informe profesional en **Word o PDF**.
 
 ---
 
-## Reescritura con IA (opcional)
+## Funciones potenciadas por IA
 
-- Motor local determinista **+ IA opcional** para una reescritura más natural.
-- Dos modos:
-  - **Ollama local** (privado, en tu equipo).
-  - **Proveedor hospedado** compatible con OpenAI (Groq) → IA para todos en la web.
-- **Degradación elegante**: sin IA, se usa la reescritura determinista.
+Integradas con la **API de Groq** (en la nube) o con **Ollama** en local.
+
+- ✨ **Reescritura inclusiva** — convierte una oferta sesgada en una versión neutra.
+- 📝 **Redacción de ofertas** — escribe una oferta completa desde unos datos.
+- 🧑‍💼 **Análisis de candidato** — fortalezas, carencias y recomendación (CV ↔ oferta).
+
+---
+
+## Arquitectura de IA · Groq + Ollama
+
+```
+Usuario → RecruitKit (Next.js / Vercel, /api/ai) → Groq API (nube)  → IA para todos
+                                                 → Ollama (local)   → privado, sin coste
+```
+
+- La **clave de la API vive solo en el servidor**.
+- **Degradación elegante**: sin IA, se usa la reescritura determinista del lexicón.
 
 ---
 
 ## Del lado del candidato y sourcing
 
-- **Compatibilidad ATS**: encaje oferta ↔ CV y palabras clave que faltan.
+- **Compatibilidad ATS**: encaje oferta ↔ CV, palabras clave que faltan y
+  **análisis del candidato con IA**.
 - **Ranking de candidatos**: ordena varios CV por su encaje con la oferta.
-- **Buscador booleano**: cadenas para **LinkedIn** y **Google X-ray**.
+- **Buscador booleano**: cadenas para LinkedIn y Google X-ray.
 
 ---
 
@@ -92,22 +100,21 @@ selección, con foco en la inclusividad.
 
 ## Stack técnico
 
-- **Next.js 15** · **React 19** · **TypeScript**
-- **Tailwind CSS** · **Auth.js (NextAuth v5)** — sesión JWT
-- **Prisma + PostgreSQL** (opcional)
-- **Vitest** (tests del motor) · **docx** (informes Word)
-- **Ollama / Groq** (IA opcional) · Despliegue en **Vercel**
+- **Frontend:** Next.js 15 · React 19 · TypeScript · Tailwind CSS
+- **Auth:** Auth.js (NextAuth v5) · sesión JWT
+- **Datos:** Prisma · PostgreSQL (opcional) · localStorage
+- **IA:** Groq API · Ollama (local)
+- **Calidad:** Vitest · docx · ESLint
+- **Deploy:** Vercel
 
 ---
 
 ## Decisiones técnicas
 
 - **Motor de análisis local y determinista** (lexicón curado, sin "caja negra").
-- **Degradación elegante**: BBDD opcional (con `localStorage` de reserva) e IA
-  opcional (deja de funcionar sin romper la app).
-- **Auth con JWT** sin base de datos y usuario semilla.
-- **i18n ES/EN** y modo claro/oscuro.
-- **Tests del motor** para ampliar el lexicón sin regresiones.
+- **IA opcional y desacoplada**: Groq o Ollama, con degradación elegante.
+- **Degradación también en datos**: base de datos opcional (`localStorage` de reserva).
+- **Auth con JWT** sin base de datos · **i18n ES/EN** · **tests** con Vitest.
 
 ---
 

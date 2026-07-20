@@ -87,6 +87,7 @@ src/
   app/
     api/            rutas: auth, register, analyses, ai (Ollama/hospedado)
     inicio/         panel con todas las herramientas
+    guia/           guía de uso
     dashboard/      analizador de sesgos
     generador/      generador de ofertas
     ats/            compatibilidad oferta ↔ CV
@@ -129,8 +130,9 @@ prisma/
 - Comparador de dos versiones de una oferta.
 - Exportación de informes en Word (.docx) y PDF.
 - Historial con estadísticas y evolución, búsqueda y orden.
-- Reescritura de ofertas asistida por IA (opcional: Ollama local o proveedor
-  hospedado compatible con OpenAI).
+- **Funciones con IA** (opcional: Ollama local o proveedor hospedado tipo Groq):
+  reescritura inclusiva, redacción de ofertas y análisis de candidato (CV ↔ oferta).
+- **Guía de uso** integrada en la app (`/guia`).
 - Registro e inicio de sesión, modo claro/oscuro e idioma español/inglés.
 
 ## Usuario de prueba
@@ -191,11 +193,10 @@ Para desplegar en Vercel basta con importar el repositorio y definir
 `AUTH_SECRET` (y `DATABASE_URL` si quieres persistencia). El build ya ejecuta
 `prisma generate`.
 
-## Documentación del proyecto
+## Presentación
 
-- Presentación: [`slides.pptx`](slides.pptx) (PowerPoint) · [`slides.md`](slides.md)
-  (fuente). El `.pptx` se regenera con `npm run slides:pptx`.
-- Guion del vídeo: [`guion-video.md`](guion-video.md)
+- [`slides.pptx`](slides.pptx) (PowerPoint) · [`slides.md`](slides.md) (fuente).
+  El `.pptx` se regenera con `npm run slides:pptx`.
 
 ## Datos de entrega
 
@@ -204,7 +205,7 @@ Nombre completo: Juan Ignacio Guitart
 Email: juanignacioguitart@gmail.com
 URL del repositorio: https://github.com/Jguita65/joblens
 URL de despliegue: https://joblens-puce.vercel.app
-URL de las slides: https://github.com/Jguita65/joblens/blob/main/slides.md
+URL de las slides: https://github.com/Jguita65/joblens/blob/main/slides.pptx
 URL del vídeo: [PENDIENTE]
 Usuario/contraseña de prueba: test@test.com / test1234
 ```
